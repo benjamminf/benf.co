@@ -1,0 +1,27 @@
+{#
+ # Index
+ # -----
+ #
+ # The home page of the website.
+ #}
+
+{% extends "_layouts/base" %}
+{% import '_macros' as macros %}
+
+{% block content %}
+
+
+	{% include '_position' with {position: 'top', modules: entry.positionTop} %}
+
+	<div class="section">
+		<div class="container +v-trim">
+
+			{% include '_components/body' with {'blocks': entry.body} %}
+
+		</div>
+	</div>
+
+	{% include '_position' with {position: 'bottom', modules: entry.positionBottom} %}
+
+
+{% endblock %}

@@ -1,0 +1,25 @@
+// Settings
+// --------
+
+$field-transition: $transition !default;
+
+
+// Button
+// ------
+
+.field {
+	@include p1(true);
+	@include hf-field(
+		$padding: hf-gutter('sm'),
+		$line-height: (27px / hf-convert($hf-font-size, px))
+	);
+
+	background-color: hf-color('primary-light');
+	color: hf-color('white');
+	transition: background-color $field-transition;
+
+	&:focus {
+		background-color: hf-color('primary');
+		color: hf-color('white');
+	}
+}

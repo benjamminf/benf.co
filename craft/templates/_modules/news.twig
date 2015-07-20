@@ -1,0 +1,32 @@
+{#
+ # News
+ # ----
+ #
+ # Shows a list of articles from the news section.
+ #
+ # @param limit
+ # @param offset
+ # @param order
+ #}
+
+{% import '_macros' as macros %}
+
+{% set limit = module.filterLimit | default(10) %}
+{% set orderBy = module.filterOrderBy | default('postDate') %}
+{% set orderDirection  = module.filterOrderDirection | default('desc') %}
+
+{% set posts  = craft.entries.section('news').limit(limit).order(orderBy ~ ' ' ~ orderDirection) %}
+
+<article itemscope itemtype="http://schema.org/ItemList">
+	<h1 itemprop="name">{{ module.title }}</h1>
+
+	{% for post in posts %}
+		<section itemprop="itemListElement" itemscope itemtype="http://schema.org/NewsArticle">
+			{{ macros.image(post.image.first(), {class: '+responsive', itemprop: 'image'}, 'card') }}
+			<h2 itemprop="headline">{{ post.title }}</h2>
+			<h4 itemprop="datePublished">{{ post.postDate | date('d M Y') }}</h4>
+			<p itemprop="description">{{ post.summary }}</p>
+			<p><a class="link" href="{{ post.getUrl }}" itemprop="url">Read More <i class="icon -arrow-right4"></i></a></p>
+		</section>
+	{% endfor %}
+</article>

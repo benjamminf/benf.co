@@ -1,0 +1,68 @@
+{#
+ # Macros
+ # ------
+ #}
+
+
+{#
+ # Creates a phone number link.
+ #
+ # @param number (String) - The phone number
+ # @param text [number] (String) - The text inside the phone link
+ # @return HTML - The phone link.
+ #}
+{% macro phoneLink(number, text) %}
+	<a class="phonelink" href="tel:{{ number | lower | replace({
+		' ': '',
+		a: 2, b: 2, c: 2,
+		d: 3, e: 3, f: 3,
+		g: 4, h: 4, i: 4,
+		j: 5, k: 5, l: 5,
+		m: 6, n: 6, o: 6,
+		p: 7, q: 7, r: 7, s: 7,
+		t: 8, u: 8, v: 8,
+		w: 9, x: 9, y: 9, z: 9
+	}) }}">
+		{% if text and text != number %}
+			{{ text }}
+		{% else %}
+			<span class="phonenumber">{{ number }}</span>
+		{% endif %}
+	</a>
+{% endmacro %}
+
+
+{#
+ # Creates am email link.
+ #
+ # @param email (String) - The email address
+ # @param text [email] (String) - The text inside the email link
+ # @return HTML - The email link.
+ #}
+{% macro emailLink(email, text) %}
+	<a href="mailto:{{ email }}">{{ text and text != email ? text : email }}</a>
+{% endmacro %}
+
+
+{#
+ # Shorthand image tag generator. Handles high resolution
+ #
+ # @param asset (AssetFile) - The image file
+ # @param class (String) - Optional class name
+ #}
+{% macro image(asset, class = '', transform = '') %}
+	{% set highres = asset.highres.first() %}
+	{% do asset.setTransform(transform) %}
+	<img src="{{ asset.getUrl() }}"
+	     {% if highres %} srcset="{{ highres.getUrl }} 2x"{% endif %}
+	     title="{{ asset.title }}"
+	     width="{{ asset.width }}"
+	     height="{{ asset.height }}"
+	     {% if class is iterable %}
+		     {% for prop, value in class %}
+			     {{ prop }}="{{ value }}"
+		     {% endfor %}
+	     {% else %}
+		     class="{{ class }}"
+	     {% endif %}>
+{% endmacro %}

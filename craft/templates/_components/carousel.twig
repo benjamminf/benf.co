@@ -1,0 +1,29 @@
+{#
+ # Carousel
+ # --------
+ #
+ # Creates an interactive gallery of images
+ #
+ # @param (Array) slides
+ # @param (Number) interval
+ #}
+
+<div class="carousel" data-model='selector -> { "total": {{ slides | length }}, "interval": {{ interval * 1000 }} }'>
+	<ul class="carousel_images">
+		{% for slide in slides %}
+			{% set image = slide.slideImage.first() %}
+			<li class="{{ loop.first ? 'is-selected ' }} alignbox"
+				data-v-class="is-selected: isSelected({{ loop.index0 }})"
+				data-image="{{ image.getUrl }}"
+				style="background-image: url('{{ image.getUrl }}')">
+				<div class="box container">
+					{{ slide.slideBody }}
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+	<ul class="carousel_buttons" aria-hidden>
+		<li><button data-v-on="click: previous(), click: interval = 0">Previous</button></li>
+		<li><button data-v-on="click: next(), click: interval = 0">Next</button></li>
+	</ul>
+</div>

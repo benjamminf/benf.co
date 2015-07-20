@@ -1,0 +1,51 @@
+// Settings
+// --------
+
+$gallery-transition: $transition !default;
+
+
+// Module
+// ------
+
+@include hf-module('gallery') {
+
+	.gallery_images {
+		position: relative;
+		margin: 0;
+		padding: 0;
+		text-align: center;
+		overflow: hidden;
+
+		> li {
+			position: absolute;
+			top: 0; bottom: 0;
+			left: 0; right: 0;
+			list-style: none;
+			opacity: 0;
+			transition: opacity $gallery-transition;
+
+			@include hf-state('selected') {
+				position: static;
+				opacity: 1;
+			}
+		}
+	}
+
+	.gallery_thumbs {
+
+		> li {
+
+			> a {
+				display: block;
+				transition: opacity $gallery-transition;
+			}
+
+			@include hf-state('selected') {
+
+				> a {
+					opacity: 0.5;
+				}
+			}
+		}
+	}
+}

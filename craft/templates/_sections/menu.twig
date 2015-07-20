@@ -1,0 +1,20 @@
+{#
+ # Menu layout
+ # -----------
+ #
+ # The menu for the website
+ #}
+
+{% import '_macros' as macros %}
+
+{% set menu = craft.entries.section('pages') %}
+
+<nav id="menu" data-model='toggler -> {"open": false}' data-v-show="open" data-v-transition>
+	<div class="container">
+
+		<ul>
+			{% include '_components/menu' with {links: menu} %}
+		</ul>
+
+	</div>
+</nav>

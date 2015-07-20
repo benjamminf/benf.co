@@ -1,0 +1,75 @@
+// Settings
+// --------
+
+$float-label-transition: $transition !default;
+
+
+// Styles
+// ------
+
+.float-label {
+	@include hf-float-label(
+		$small-label-font-size: 0.5em,
+		$padding: hf-gutter('sm'),
+		$line-height: (27px / hf-convert($hf-font-size, px)),
+		$label-shift: -1em,
+		$field-shift: 0.5em,
+		$shift-on-focus: true
+	);
+
+	> label {
+		@include p1(true);
+
+		color: hf-color('mid');
+		transition: color $float-label-transition, transform $float-label-transition;
+	}
+
+	> input,
+	> select,
+	> textarea {
+		@include p1(true);
+
+		border-color: hf-color('light');
+		background-color: hf-color('white');
+		color: hf-color('darker');
+
+		&:focus {
+			outline: 0;
+		}
+	}
+
+	> textarea {
+		padding-top: 2em;
+	}
+
+	@include hf-state('focused') {
+
+		> input,
+		> select,
+		> textarea {
+			outline: 0;
+			box-shadow: 0 0 5px hf-color('black', 0.2);
+		}
+	}
+
+	@include hf-state('filled') {
+
+		> label {
+			color: hf-color('light');
+		}
+	}
+
+	@include hf-state('invalid') {
+
+		> label {
+			color: hf-color('danger');
+		}
+	}
+
+	@include hf-state('scrolled') {
+
+		> label {
+			color: hf-color('light', 0);
+		}
+	}
+}

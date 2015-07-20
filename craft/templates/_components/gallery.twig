@@ -1,0 +1,33 @@
+{#
+ # Gallery
+ # -------
+ #
+ # Creates an interactive gallery of images
+ #
+ # @param (AssetFiles) images
+ #}
+
+<div class="gallery" data-model='selector -> { "total": {{ images | length }} }'>
+	<ul class="gallery_images">
+		{% set i = 0 %}
+		{% for image in images %}
+			<li{{ i == 0 ? ' class="is-selected"' : '' }} data-v-class="is-selected: isSelected({{ i }})">
+				<img src="{{ image.getUrl('gallery') }}" title="{{ image.title }}" class="+responsive">
+				<p>{{ image.title }}</p>
+			</li>
+			{% set i = i + 1 %}
+		{% endfor %}
+	</ul>
+	<ul class="gallery_thumbs bar">
+		{% set i = 0 %}
+		{% for image in images %}
+			{% set thumb = image.galleryThumbnail | length ? image.galleryThumbnail.first() : image %}
+			<li{{ i == 0 ? ' class="is-selected"' : '' }} data-v-class="is-selected: isSelected({{ i }})">
+				<a href="{{ image.getUrl }}" target="_blank" data-v-on="click: select({{ i }}), click: prevent">
+					<img src="{{ thumb.getUrl('thumbnail') }}">
+				</a>
+			</li>
+			{% set i = i + 1 %}
+		{% endfor %}
+	</ul>
+</div>

@@ -1,0 +1,66 @@
+// Settings
+// --------
+
+$typography-transition: $transition !default;
+
+
+// Paragraph
+// ---------
+
+@mixin p1($only-styling: false) {
+	font-family: hf-font('primary');
+	font-weight: hf-font-weight('primary', 'regular');
+
+	@if not $only-styling {
+		font-size: 1em;
+		line-height: (27px / hf-convert($hf-font-size, px));
+	}
+
+	letter-spacing: 0;
+	text-transform: none;
+	text-decoration: none;
+}
+
+body, .p1 { @include p1; }
+p, ul, ol, blockquote { margin: 1em 0; }
+
+
+// Headings
+// --------
+
+@mixin h1($only-styling: false) {
+	font-family: hf-font('primary');
+	font-weight: hf-font-weight('primary', 'light');
+
+	@if not $only-styling {
+		@include hf-responsive((
+			'mobl': (font-size: em(33px)),
+			'tabl': (font-size: em(36px)),
+			'desk': (font-size: em(39px))
+		));
+
+		line-height: (46px / 39px);
+	}
+
+	letter-spacing: 0;
+	text-transform: none;
+	text-decoration: none;
+}
+
+h1, .h1 { @include h1; }
+h1 { margin: 1em 0; }
+
+
+// Link
+// ----
+
+a {
+	color: inherit;
+	text-decoration: underline;
+	transition: color $typography-transition;
+
+	&:hover,
+	&:focus {
+		color: hf-color('primary');
+	}
+}

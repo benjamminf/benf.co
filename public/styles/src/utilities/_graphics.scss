@@ -1,0 +1,120 @@
+// Menu Burger
+// -----------
+
+@mixin burger($color, $width, $bar-height, $bar-spacing: $bar-height, $bar-rounded: false) {
+	position: relative;
+	width: $width;
+
+	&:before,
+	&:after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+	}
+
+	&:before {
+		top: -($bar-height + $bar-spacing);
+	}
+
+	&:after {
+		bottom: -($bar-height + $bar-spacing);
+	}
+
+	&,
+	&:before,
+	&:after {
+		display: block;
+		height: $bar-height;
+		@if $bar-rounded { border-radius: $bar-height; }
+		background-color: $color;
+	}
+}
+
+@mixin burger-color($color) {
+
+	&,
+	&:before,
+	&:after {
+		background-color: $color;
+	}
+}
+
+
+// Cross
+// -----
+
+@mixin cross($color, $size, $thickness, $rounded: false) {
+	$SQRT_2: 1.41421356237;
+	$width: $size * $SQRT_2;
+
+	position: relative;
+	width: $size;
+	height: $size;
+
+	&:before,
+	&:after {
+		content: '';
+		position: absolute;
+		left: -(($SQRT_2 - 1) / 2) * 100%;
+		right: -(($SQRT_2 - 1) / 2) * 100%;
+		top: 50%;
+		//margin-top: -($thickness / 2);
+		height: $thickness;
+		background-color: $color;
+
+		@if $rounded {
+			border-radius: 999px;
+		}
+	}
+
+	&:before {
+		transform: translateY(-($thickness / 2)) rotate(45deg);
+	}
+
+	&:after {
+		transform: translateY(-($thickness / 2)) rotate(-45deg);
+	}
+}
+
+@mixin cross-color($color) {
+
+	&:before,
+	&:after {
+		background-color: $color;
+	}
+}
+
+
+// Shade
+// -----
+
+@mixin shade($size, $color: 'black', $opacity: 1, $position: bottom) {
+	$position-opposite: map-get((top: bottom, bottom: top, left: right, right: left), $position);
+	$dimension: map-get((top: height, bottom: height, left: width, right: width), $position);
+
+	position: absolute;
+	z-index: 20;
+	$position: 0;
+
+	@if $dimension == height {
+		left: 0;
+		right: 0;
+
+	} @else {
+		top: 0;
+		bottom: 0;
+	}
+
+	background-image: linear-gradient(to $position,
+		hf-color($color, 0) 0%,
+		hf-color($color, $opacity) 100%
+	);
+
+	@if unit($size) == '%' {
+		$position-opposite: 100% - $size;
+
+	} @else {
+		$dimension: $size;
+	}
+}

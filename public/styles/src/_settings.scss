@@ -1,0 +1,64 @@
+// Hydro
+// -----
+
+$hf-font-size: 18px;
+
+$hf-max-width: 1100px;
+
+$hf-sizes: (
+	'sm': 0.5em,
+	'md':   1em,
+	'lg':   2em
+);
+
+$hf-gutters: (
+	'us':  5px,
+	'xs': 10px,
+	'sm': 22px,
+	'md': 36px,
+	'lg': 60px
+);
+
+$hf-breakpoints: (
+	'mobl':    0px,
+	'tabl':  640px,
+	'desk': 1080px
+);
+
+$hf-colors: (
+	'white':         #fff,
+	'black':         #000,
+
+	'darker':        'black',
+	'dark':          #59595b,
+	'mid':           #818185,
+	'light':         #cacece,
+	'lighter':       #f1f1f1,
+
+	'primary-light': #00adef,
+	'primary':       #0087c8,
+	'primary-dark':  #015595,
+
+	'success':       #51e536,
+	'info':          'primary-light',
+	'warning':       #f69d21,
+	'danger':        #ff2b3d
+);
+
+$hf-fonts: (
+	'primary': ('Source Sans Pro', sans-serif)
+);
+
+$hf-weights: (
+	'primary': (
+		'light':   300,
+		'regular': 400,
+		'bold':    700
+	)
+);
+
+
+// Theme
+// -----
+
+$transition: 0.3s;

@@ -1,0 +1,19 @@
+
+@each $gap-name, $gap-value in $hf-gutters {
+
+	@include hf-utility('spacer-' + $gap-name) {
+
+		> * {
+			margin-top: $gap-value;
+			margin-bottom: $gap-value;
+		}
+
+		> :first-child {
+			margin-top: 0;
+		}
+
+		> :last-child {
+			margin-bottom: 0;
+		}
+	}
+}

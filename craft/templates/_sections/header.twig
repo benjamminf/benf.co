@@ -1,0 +1,34 @@
+{#
+ # Header layout
+ # -------------
+ #
+ # The header for the website
+ #}
+
+{% import '_macros' as macros %}
+
+{% set logo = company.logo.first() %}
+{% set menu = craft.entries.section('pages') %}
+
+<header id="header">
+	<div class="container">
+		<div class="header_bar">
+
+			<h1 class="header_logo">
+				<a href="{{ siteUrl }}">{{ macros.image(logo, '+responsive') }}</a>
+			</h1>
+
+			<nav class="header_menu">
+				<ul class="bar -h-align-center">
+					{% include '_components/menu' with {links: menu} %}
+				</ul>
+			</nav>
+
+			<a class="header_menu-button" href="#menu" aria-label="Skip to menu"
+			   data-control="#menu" data-v-on="click: toggle, click: prevent">
+				<i class="header_menu-icon"></i>
+			</a>
+
+		</div>
+	</div>
+</header>

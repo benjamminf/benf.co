@@ -1,0 +1,30 @@
+// Settings
+// --------
+
+$banner-transition: 1s !default;
+
+
+// Module
+// ------
+
+@include hf-module('banner') {
+	position: relative;
+
+	.banner_background {
+		position: absolute;
+		top: 0; bottom: 0;
+		left: 0; right: 0;
+		background-position: center;
+		background-size: cover;
+		transition: $banner-transition;
+
+		html#{hf-feature('js')} &[data-image]:not(#{hf-state('ready')}) {
+			opacity: 0;
+		}
+	}
+
+	.banner_content {
+		position: relative;
+		z-index: 1;
+	}
+}

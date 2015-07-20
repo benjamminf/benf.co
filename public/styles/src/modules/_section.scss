@@ -1,0 +1,29 @@
+// Utilities
+// ---------
+
+%section-h-padding {
+	@include hf-responsive((
+		'mobl': (padding-left: hf-gutter('sm'), padding-right: hf-gutter('sm')),
+		'tabl': (padding-left: hf-gutter('md'), padding-right: hf-gutter('md'))
+	));
+}
+
+%section-v-padding {
+	@include hf-responsive((
+		'mobl': (padding-top: hf-gutter('md'), padding-bottom: hf-gutter('md')),
+		'desk': (padding-top: hf-gutter('lg'), padding-bottom: hf-gutter('lg'))
+	));
+}
+
+%section-padding {
+	@extend %section-h-padding;
+	@extend %section-v-padding;
+}
+
+
+// Module
+// ------
+
+@include hf-module('section') {
+	@extend %section-padding;
+}

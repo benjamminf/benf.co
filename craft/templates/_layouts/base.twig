@@ -1,0 +1,84 @@
+{#
+ # Base layout
+ # -----------
+ #
+ # The base HTML structure for a page.
+ #
+ # @param pageTitle (String) - The page title to go in the window title bar
+ # @block content - The main page content
+ #}
+
+{# Are pages just links to other pages? If so redirect them #}
+{% if entry.type == 'internalLink' %}
+	{% set linkEntry = entry.linkEntry.first() %}
+	{% redirect linkEntry.getUrl %}
+{% elseif entry.type == 'externalLink' %}
+	{% set link = entry.linkUrl %}
+	{% redirect url(link) %}
+{% endif %}
+
+<!DOCTYPE html>
+<html dir="ltr" lang="{{ craft.locale }}" class="no-js is-loading">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+
+	{% include '_sections/meta' %}
+
+	<base href="{{ siteUrl }}">
+
+	<title>{% if pageTitle is defined %}{{ pageTitle }} - {% endif %}{{ siteName }}</title>
+
+	<script>(function(d){d.className=d.className.replace(/\bno-js\b/,'has-js')}(document.documentElement))</script>
+
+	<link rel="home" href="{{ siteUrl }}">
+	<link rel="stylesheet" href="{{ url('styles/app.min.css') }}">
+	<link rel="shortcut icon" href="{{ url('favicon.ico') }}">
+
+	{{ getHeadHtml() }}
+
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		{% for code in analytics.googleCodes %}
+			{% set default = code.name == 'default' %}
+			ga('create', {{ code.value }}, 'auto'{{ not default ? ", {name: '" ~ code.name ~ "'}" }});
+			ga('{{ not default ? code.name ~ '.' }}send', 'pageview');
+		{% endfor %}
+	 </script>
+
+</head>
+<body ontouchstart>
+
+{% include '_sections/header' %}
+
+<main id="content" role="main">
+
+	{% block content %}
+		<div class="section">
+			<div class="container">
+				<p class="+color-error">Error: No block to extend</p>
+			</div>
+		</div>
+	{% endblock %}
+
+</main>
+
+{% include '_sections/footer' %}
+{% include '_sections/menu' %}
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/vue/0.11.10/vue.min.js"></script>
+
+{{ getFootHtml() }}
+
+<script src="{{ url('scripts/app.min.js') }}"></script>
+
+<script>(function(d){d.className=d.className.replace(/\bis-loading\b/,'is-ready');d.offsetWidth}(document.documentElement))</script>
+
+</body>
+</html>

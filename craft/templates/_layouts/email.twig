@@ -1,0 +1,20 @@
+{#
+ # Email layout
+ # ------------
+ #
+ # The base HTML structure for a system email.
+ #
+ # @param body (String)
+ #}
+
+{% inlinecss 'styles/email.css' %}
+<html>
+<body>
+
+<div id="content">
+	{{ body }}
+</div>
+
+</body>
+</html>
+{% endinlinecss %}

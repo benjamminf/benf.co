@@ -1,0 +1,25 @@
+// Settings
+// --------
+
+$button-transition: $transition !default;
+
+
+// Button
+// ------
+
+.button {
+	@include p1(true);
+	@include hf-button(
+		$padding: hf-gutter('sm')
+	);
+
+	background-color: hf-color('primary-light');
+	color: hf-color('white');
+	transition: background-color $button-transition;
+
+	&:hover,
+	&:focus {
+		background-color: hf-color('primary');
+		color: hf-color('white');
+	}
+}

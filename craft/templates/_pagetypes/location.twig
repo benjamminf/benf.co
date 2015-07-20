@@ -1,0 +1,48 @@
+{#
+ # Location page
+ # -------------
+ #}
+
+{% extends '_layouts/base' %}
+{% set pageTitle = entry.title %}
+
+{% includeJsFile 'https://maps.googleapis.com/maps/api/js?libraries=places' %}
+{% includeJsFile 'scripts/libs/store-locator.min.js' %}
+
+{% block content %}
+
+
+	{% set body %}
+		<div class="+v-trim">
+			{% include '_components/body' with {'blocks': entry.body} %}
+		</div>
+		{% include '_position' with {position: 'content', modules: entry.positionContent} %}
+	{% endset %}
+
+	{% include '_position' with {position: 'top', modules: entry.positionTop} %}
+
+	<article class="section">
+		<div class="container">
+			{% if entry.positionSidebar %}
+
+				<div class="columns -h-gap-lg -v-gap-lg">
+					<div class="column -desk-9">
+						{{ body }}
+					</div>
+					<div class="column -desk-3">
+						{% include '_position' with {position: 'sidebar', modules: entry.positionSidebar} %}
+					</div>
+				</div>
+
+			{% else %}
+
+				{{ body }}
+
+			{% endif %}
+		</div>
+	</article>
+
+	{% include '_position' with {position: 'bottom', modules: entry.positionBottom} %}
+
+
+{% endblock %}

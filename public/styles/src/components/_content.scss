@@ -1,0 +1,9 @@
+// Horizontal Rule
+// ---------------
+
+hr {
+	margin: hf-gutter('md') 0;
+	height: 1px;
+	border: 0;
+	background-color: hf-color('light');
+}

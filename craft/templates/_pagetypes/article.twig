@@ -1,0 +1,47 @@
+{#
+ # General page
+ # ------------
+ #}
+
+{% extends "_layouts/base" %}
+{% set pageTitle = entry.title %}
+
+{% block content %}
+
+
+	{% set body %}
+		<h1 itemprop="headline">{{ entry.title }}</h1>
+		<h4 itemprop="datePublished">{{ entry.postDate | date('d M Y') }}</h4>
+		<div class="+v-trim" itemprop="articleBody">
+			{% include '_components/body' with {'blocks': entry.body} %}
+		</div>
+		{% include '_position' with {position: 'content', modules: entry.positionContent} %}
+	{% endset %}
+
+	{% include '_position' with {position: 'top', modules: entry.positionTop} %}
+
+	<article class="section article" itemscope itemtype="http://schema.org/NewsArticle">
+		<div class="container">
+			{% if entry.positionSidebar %}
+
+				<div class="columns -h-gap-lg -v-gap-lg">
+					<div class="column -desk-9">
+						{{ body }}
+					</div>
+					<div class="column -desk-3">
+						{% include '_position' with {position: 'sidebar', modules: entry.positionSidebar} %}
+					</div>
+				</div>
+
+			{% else %}
+
+				{{ body }}
+
+			{% endif %}
+		</div>
+	</article>
+
+	{% include '_position' with {position: 'bottom', modules: entry.positionBottom} %}
+
+
+{% endblock %}

@@ -10,16 +10,20 @@ $button-transition: $transition !default;
 .button {
 	@include p1(true);
 	@include hf-button(
-		$padding: hf-gutter('sm')
+		$padding: hf-gutter('sm') hf-gutter('md'),
+		$border-width: 2px
 	);
 
-	background-color: hf-color('primary-light');
-	color: hf-color('white');
-	transition: background-color $button-transition;
+	border-color: hf-color('mid', 0.75);
+	background-color: transparent;
+	color: hf-color('mid');
+	transition:
+		background-color $button-transition,
+		color $button-transition;
 
 	&:hover,
 	&:focus {
-		background-color: hf-color('primary');
+		background-color: hf-color('mid');
 		color: hf-color('white');
 	}
 }

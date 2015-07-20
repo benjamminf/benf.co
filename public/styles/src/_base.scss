@@ -2,12 +2,13 @@
 // ------
 
 html {
-	background-color: hf-color('lighter');
-	color: hf-color('dark');
+	background-color: hf-color('dark');
+	color: hf-color('white');
 }
 
 #content {
 	background-color: hf-color('white');
+	color: hf-color('mid');
 }
 
 [data-v-cloak] {

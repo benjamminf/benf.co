@@ -13,10 +13,10 @@ $typography-transition: $transition !default;
 
 	@if not $only-styling {
 		font-size: 1em;
-		line-height: (27px / hf-convert($hf-font-size, px));
+		line-height: decimal(26px);
 	}
 
-	letter-spacing: 0;
+	letter-spacing: -0.05em;
 	text-transform: none;
 	text-decoration: none;
 }
@@ -25,30 +25,96 @@ body, .p1 { @include p1; }
 p, ul, ol, blockquote { margin: 1em 0; }
 
 
-// Headings
-// --------
+// Heading 1
+// ---------
 
 @mixin h1($only-styling: false) {
 	font-family: hf-font('primary');
-	font-weight: hf-font-weight('primary', 'light');
 
 	@if not $only-styling {
 		@include hf-responsive((
-			'mobl': (font-size: em(33px)),
-			'tabl': (font-size: em(36px)),
-			'desk': (font-size: em(39px))
+			'mobl': (font-size: em(28px), font-weight: hf-font-weight('primary', 'regular')),
+			'tabl': (font-size: em(40px), font-weight: hf-font-weight('primary', 'light')),
+			'desk': (font-size: em(52px))
 		));
 
-		line-height: (46px / 39px);
+		line-height: decimal(60px, 52px);
 	}
 
-	letter-spacing: 0;
+	letter-spacing: -0.05em;
 	text-transform: none;
 	text-decoration: none;
 }
 
 h1, .h1 { @include h1; }
 h1 { margin: 1em 0; }
+
+
+// Heading 2
+// ---------
+
+@mixin h2($only-styling: false) {
+	font-family: hf-font('primary');
+	font-weight: hf-font-weight('primary', 'regular');
+
+	@if not $only-styling {
+		@include hf-responsive((
+			'mobl': (font-size: em(24px)),
+			'tabl': (font-size: em(30px))
+		));
+
+		line-height: decimal(40px, 30px);
+	}
+
+	letter-spacing: -0.05em;
+	text-transform: none;
+	text-decoration: none;
+}
+
+h2, .h2 { @include h2; }
+h2 { margin: 1em 0; }
+
+
+// Heading 3
+// ---------
+
+@mixin h3($only-styling: false) {
+	font-family: hf-font('primary');
+	font-weight: hf-font-weight('primary', 'regular');
+
+	@if not $only-styling {
+		font-size: em(24px);
+		line-height: decimal(32px, 24px);
+	}
+
+	letter-spacing: -0.05em;
+	text-transform: none;
+	text-decoration: none;
+}
+
+h3, .h3 { @include h3; }
+h3 { margin: 1em 0; }
+
+
+// Heading 4
+// ---------
+
+@mixin h4($only-styling: false) {
+	font-family: hf-font('primary');
+	font-weight: hf-font-weight('primary', 'semibold');
+
+	@if not $only-styling {
+		font-size: em(14px);
+		line-height: decimal(18px, 14px);
+	}
+
+	letter-spacing: -0.05em;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+h4, .h4 { @include h4; }
+h4 { margin: 1em 0; }
 
 
 // Link
@@ -58,9 +124,4 @@ a {
 	color: inherit;
 	text-decoration: underline;
 	transition: color $typography-transition;
-
-	&:hover,
-	&:focus {
-		color: hf-color('primary');
-	}
 }

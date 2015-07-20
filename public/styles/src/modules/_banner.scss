@@ -10,7 +10,7 @@ $banner-transition: 1s !default;
 @include hf-module('banner') {
 	position: relative;
 
-	.banner_background {
+	&_background {
 		position: absolute;
 		top: 0; bottom: 0;
 		left: 0; right: 0;
@@ -23,7 +23,7 @@ $banner-transition: 1s !default;
 		}
 	}
 
-	.banner_content {
+	&_content {
 		position: relative;
 		z-index: 1;
 	}

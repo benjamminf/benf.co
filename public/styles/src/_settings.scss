@@ -24,20 +24,20 @@ $hf-breakpoints: (
 );
 
 $hf-colors: (
-	'white':         #fff,
-	'black':         #000,
+	'white': #fff,
+	'black': #000,
 
-	'dark':          #363b41,
-	'mid':           #848b94,
-	'light':         #e9ebed,
+	'dark': #363b41,
+	'mid': #848b94,
+	'light': #e9ebed,
 
-	'success':       #a8d963,
-	'info':          #62bce9,
-	'warning':       #e2b23d,
-	'danger':        #da5a47,
+	'success': #a8d963,
+	'info': #62bce9,
+	'warning': #e2b23d,
+	'danger': #da5a47,
 
-	'hydro':         #62bce9,
-	'craft':         #da5a47
+	'hydro': #62bce9,
+	'craft': #da5a47
 );
 
 $hf-fonts: (
@@ -56,4 +56,5 @@ $hf-weights: (
 // Theme
 // -----
 
+$border-radius: 3px;
 $transition: 0.3s;

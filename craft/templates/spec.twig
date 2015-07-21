@@ -21,18 +21,15 @@
 			<ul class="bar">
 				<li class="+background-black +color-white +padding-sm">Black</li>
 				<li class="+background-white +color-black +padding-sm">White</li>
-				<li class="+background-darker +color-white +padding-sm">Darker</li>
 				<li class="+background-dark +color-white +padding-sm">Dark</li>
 				<li class="+background-mid +color-white +padding-sm">Mid</li>
 				<li class="+background-light +color-black +padding-sm">Light</li>
-				<li class="+background-lighter +color-black +padding-sm">Lighter</li>
-				<li class="+background-primary-dark +color-white +padding-sm">Primary Dark</li>
-				<li class="+background-primary +color-white +padding-sm">Primary</li>
-				<li class="+background-primary-light +color-white +padding-sm">Primary Light</li>
 				<li class="+background-success +color-white +padding-sm">Success</li>
 				<li class="+background-info +color-white +padding-sm">Info</li>
 				<li class="+background-warning +color-white +padding-sm">Warning</li>
 				<li class="+background-danger +color-white +padding-sm">Danger</li>
+				<li class="+background-hydro +color-white +padding-sm">Hydro</li>
+				<li class="+background-craft +color-white +padding-sm">Craft</li>
 			</ul>
 
 		</div>
@@ -67,7 +64,7 @@
 			<h6 class="+t-margin-none">The quick brown fox jumped over the lazy dog.</h6>
 
 			<p class="+b-margin-none +color-light"><strong>Body</strong></p>
-			<p class="+t-margin-none +color-dark">The quick brown fox jumped over the lazy dog. <a href="#">Read more.</a></p>
+			<p class="+t-margin-none">The quick brown fox jumped over the lazy dog. <a href="#">Read more.</a></p>
 
 		</div>
 	</div>
@@ -77,13 +74,16 @@
 	 # Buttons
 	 #}
 
-	<div class="section +t-padding-none">
+	<div class="section +background-light">
 		<div class="container +v-trim">
 
 			<p><strong>Buttons</strong></p>
 
 			<ul class="bar -h-gap-sm -v-gap-sm -v-align-center">
-				<li><button class="button">Button <i class="icon -arrow-right4"></i></button></li>
+				<li><button class="button">Button</button></li>
+				<li><button class="button -style-white">White</button></li>
+				<li><button class="button -style-hydro">Hydro</button></li>
+				<li><button class="button -style-craft">Craft</button></li>
 			</ul>
 
 		</div>
@@ -94,7 +94,7 @@
 	 # Fields
 	 #}
 
-	<div class="section +background-lighter">
+	<div class="section">
 		<div class="container +v-trim">
 
 			<p><strong>Fields</strong></p>
@@ -104,7 +104,7 @@
 					<input class="field" type="text">
 				</div>
 				<div class="column -desk-4">
-					<div class="float-label">
+					<div class="float-label" data-label="Float Input">
 						<label for="input">Float Input</label>
 						<input id="input" type="email" value="john@gmail.com">
 					</div>
@@ -137,7 +137,7 @@
 					<textarea rows="5">Textarea</textarea>
 				</div>
 				<div class="column">
-					<div class="float-label">
+					<div class="float-label" data-label="Float Textarea">
 						<label for="textarea">Float Textarea</label>
 						<textarea id="textarea" rows="5"></textarea>
 					</div>

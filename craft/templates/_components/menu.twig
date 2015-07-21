@@ -20,7 +20,7 @@
 			{% set isSelected = (entry is defined and entry.id == link.id) %}
 
 			<{{ tag }}>
-				<a{{ isSelected ? ' class="is-selected"' : '' }} href="{{ link.getUrl }}">
+				<a class="{{ isSelected ? ' is-selected' }}" data-entry="{{ link.slug }}" href="{{ link.getUrl }}">
 					{{ link.title }}
 				</a>
 			</{{ tag }}>
@@ -31,7 +31,7 @@
 			{% set isSelected = (entry is defined and entry.id == linkEntry.id) %}
 
 			<{{ tag }}>
-				<a{{ isSelected ? ' class="is-selected"' : '' }} href="{{ linkEntry.getUrl }}">
+				<a class="{{ isSelected ? ' is-selected' }}" data-entry="{{ linkEntry.slug }}" href="{{ linkEntry.getUrl }}">
 					{{ link.title }}
 				</a>
 			</{{ tag }}>

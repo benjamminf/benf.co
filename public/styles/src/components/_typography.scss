@@ -16,7 +16,7 @@ $typography-transition: $transition !default;
 		line-height: decimal(26px);
 	}
 
-	letter-spacing: -0.05em;
+	letter-spacing: -0.025em;
 	text-transform: none;
 	text-decoration: none;
 }
@@ -55,7 +55,7 @@ h1 { margin: 1em 0; }
 
 @mixin h2($only-styling: false) {
 	font-family: hf-font('primary');
-	font-weight: hf-font-weight('primary', 'regular');
+	font-weight: hf-font-weight('primary', 'light');
 
 	@if not $only-styling {
 		@include hf-responsive((
@@ -80,7 +80,7 @@ h2 { margin: 1em 0; }
 
 @mixin h3($only-styling: false) {
 	font-family: hf-font('primary');
-	font-weight: hf-font-weight('primary', 'regular');
+	font-weight: hf-font-weight('primary', 'light');
 
 	@if not $only-styling {
 		font-size: em(24px);
@@ -108,7 +108,7 @@ h3 { margin: 1em 0; }
 		line-height: decimal(18px, 14px);
 	}
 
-	letter-spacing: -0.05em;
+	letter-spacing: -0.025em;
 	text-transform: uppercase;
 	text-decoration: none;
 }
@@ -122,6 +122,6 @@ h4 { margin: 1em 0; }
 
 a {
 	color: inherit;
-	text-decoration: underline;
+	text-decoration: none;
 	transition: color $typography-transition;
 }

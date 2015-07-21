@@ -26,5 +26,8 @@ define(function()
 	require('components/model')();
 	require('components/control')();
 
+	// Section initialisation
+	require('sections/header')();
+
 	return def;
 });

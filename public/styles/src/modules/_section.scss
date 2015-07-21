@@ -26,4 +26,18 @@
 
 @include hf-module('section') {
 	@extend %section-padding;
+
+	@include hf-parameter('style-dark') {
+		background-color: hf-color('dark');
+		color: hf-color('white');
+
+		a {
+			color: hf-color('white', 0.5);
+
+			&:hover,
+			&:focus {
+				color: hf-color('white');
+			}
+		}
+	}
 }

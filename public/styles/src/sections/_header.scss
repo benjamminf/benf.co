@@ -8,11 +8,51 @@
 #header {
 	@extend %section-h-padding;
 
-	.header_logo {
+	padding-top: hf-gutter('md') / 2;
+	padding-bottom: hf-gutter('md') / 2;
 
+	.header_bar {
+		@include hf-structure(
+			$h-gap: hf-gutter('md'),
+			$h-align: justify,
+			$v-align: center
+		);
+	}
+
+	.header_logo {
+		font-size: 1em;
+
+		a {
+			display: block;
+			padding: hf-gutter('md') / 2;
+		}
 	}
 
 	.header_menu {
 
+		a {
+			@extend .h4;
+
+			display: block;
+			padding: hf-gutter('md') / 2;
+			color: hf-color('white', 0.5);
+
+			&:hover,
+			&:focus {
+				color: hf-color('white');
+			}
+		}
+	}
+
+	.header_menu-button {
+		display: none;
+	}
+
+	body.section-homepage & {
+		position: absolute;
+		z-index: 10;
+		top: 0;
+		left: 0;
+		right: 0;
 	}
 }

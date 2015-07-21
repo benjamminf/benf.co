@@ -13,11 +13,13 @@
 
 	{% include '_position' with {position: 'top', modules: entry.positionTop} %}
 
-	<div class="section">
-		<div class="container +v-trim">
+	<div id="hero" class="section -style-dark">
+		<div class="alignbox">
+			<div class="box container +v-trim">
 
-			{% include '_components/body' with {'blocks': entry.body} %}
+				{% include '_components/body' with {'blocks': entry.body} %}
 
+			</div>
 		</div>
 	</div>
 

@@ -1,6 +1,7 @@
 // Settings
 // --------
 
+$button-border-radius: $border-radius !default;
 $button-transition: $transition !default;
 
 
@@ -14,6 +15,7 @@ $button-transition: $transition !default;
 		$border-width: 2px
 	);
 
+	border-radius: $button-border-radius;
 	border-color: hf-color('mid', 0.75);
 	background-color: transparent;
 	color: hf-color('mid');
@@ -25,5 +27,40 @@ $button-transition: $transition !default;
 	&:focus {
 		background-color: hf-color('mid');
 		color: hf-color('white');
+	}
+
+	@include hf-parameter('style-white') {
+		border-color: transparent;
+		background-color: hf-color('white');
+
+		&:hover,
+		&:focus {
+			background-color: hf-color('dark');
+			color: hf-color('light');
+		}
+	}
+
+	@include hf-parameter('style-hydro') {
+		border-color: transparent;
+		background-color: hf-color('hydro');
+		color: hf-color('white');
+
+		&:hover,
+		&:focus {
+			background-color: hf-color('dark');
+			color: hf-color('hydro');
+		}
+	}
+
+	@include hf-parameter('style-craft') {
+		border-color: transparent;
+		background-color: hf-color('craft');
+		color: hf-color('white');
+
+		&:hover,
+		&:focus {
+			background-color: hf-color('dark');
+			color: hf-color('craft');
+		}
 	}
 }

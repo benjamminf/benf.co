@@ -15,20 +15,20 @@ return array(
 		'omitScriptNameInUrls' => true,
 		'testToEmailAddress' => 'benjfleming21@gmail.com',
 
-		'siteUrl' => '/website/public',
+		'siteUrl' => '/benf.co/public',
 
 		'environmentVariables' => array(
-			'basePath' => 'c:\\wamp\\www\\website\\public\\',
-			'baseUrl' => '/website/public/'
+			'basePath' => 'c:\\wamp\\www\\benf.co\\public\\',
+			'baseUrl' => '/benf.co/public/'
 		)
 	),
 
 	// Production server
-	'website.com' => array(
+	'benf.co' => array(
 
 		'testToEmailAddress' => false,
 
-		'siteUrl' => '//website.com/',
+		'siteUrl' => '//benf.co/',
 
 		'environmentVariables' => array(
 			'basePath' => '/home/website/public_html/',

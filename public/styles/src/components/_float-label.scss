@@ -9,19 +9,33 @@ $float-label-transition: $transition !default;
 
 .float-label {
 	@include hf-float-label(
-		$small-label-font-size: 0.5em,
-		$padding: hf-gutter('sm'),
-		$line-height: (27px / hf-convert($hf-font-size, px)),
-		$label-shift: -1em,
-		$field-shift: 0.5em,
-		$shift-on-focus: true
+		$small-label-font-size: em(14px),
+		$padding: hf-gutter('md'),
+		$line-height: decimal(26px),
+		$label-shift: em(-14px, 14px),
+		$field-shift: em(12px),
+		$shift-on-focus: true,
+		$secondary-label: 'data-label'
 	);
 
 	> label {
 		@include p1(true);
 
 		color: hf-color('mid');
-		transition: color $float-label-transition, transform $float-label-transition;
+		transition: opacity $float-label-transition,
+		transform $float-label-transition;
+	}
+
+	&:before {
+		@include h4(true);
+
+		color: hf-color('mid', 0.5);
+		opacity: 0;
+		transform: translateY(-8px);
+		transition:
+			color $float-label-transition,
+			opacity $float-label-transition,
+			transform $float-label-transition;
 	}
 
 	> input,
@@ -29,9 +43,8 @@ $float-label-transition: $transition !default;
 	> textarea {
 		@include p1(true);
 
-		border-color: hf-color('light');
-		background-color: hf-color('white');
-		color: hf-color('darker');
+		background-color: hf-color('light');
+		color: hf-color('dark');
 
 		&:focus {
 			outline: 0;
@@ -39,7 +52,21 @@ $float-label-transition: $transition !default;
 	}
 
 	> textarea {
-		padding-top: 2em;
+		padding-top: hf-gutter('md') * 2;
+	}
+
+
+	@include hf-state('filled', 'focused') {
+
+		> label {
+			opacity: 0;
+			transform: translateY(8px);
+		}
+
+		&:before {
+			opacity: 1;
+			transform: none;
+		}
 	}
 
 	@include hf-state('focused') {
@@ -48,28 +75,21 @@ $float-label-transition: $transition !default;
 		> select,
 		> textarea {
 			outline: 0;
-			box-shadow: 0 0 5px hf-color('black', 0.2);
-		}
-	}
-
-	@include hf-state('filled') {
-
-		> label {
-			color: hf-color('light');
+			box-shadow: none;
 		}
 	}
 
 	@include hf-state('invalid') {
 
-		> label {
+		&:before {
 			color: hf-color('danger');
 		}
 	}
 
 	@include hf-state('scrolled') {
 
-		> label {
-			color: hf-color('light', 0);
+		&:before {
+			color: hf-color('mid', 0);
 		}
 	}
 }

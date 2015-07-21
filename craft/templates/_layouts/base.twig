@@ -17,6 +17,10 @@
 	{% redirect url(link) %}
 {% endif %}
 
+{% if entry is defined %}
+	{% set section = entry.section %}
+{% endif %}
+
 <!DOCTYPE html>
 <html dir="ltr" lang="{{ craft.locale }}" class="no-js is-loading">
 <head>
@@ -52,7 +56,7 @@
 	 </script>
 
 </head>
-<body ontouchstart>
+<body{% if entry is defined %} class="section-{{ section.handle }} entry-{{ entry.slug }}"{% endif %} ontouchstart>
 
 {% include '_sections/header' %}
 

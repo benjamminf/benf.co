@@ -55,7 +55,7 @@ h1 { margin: 1em 0; }
 
 @mixin h2($only-styling: false) {
 	font-family: hf-font('primary');
-	font-weight: hf-font-weight('primary', 'light');
+	font-weight: hf-font-weight('primary', 'regular');
 
 	@if not $only-styling {
 		@include hf-responsive((
@@ -66,7 +66,7 @@ h1 { margin: 1em 0; }
 		line-height: decimal(40px, 30px);
 	}
 
-	letter-spacing: -0.05em;
+	letter-spacing: -0.04em;
 	text-transform: none;
 	text-decoration: none;
 }
@@ -80,14 +80,17 @@ h2 { margin: 1em 0; }
 
 @mixin h3($only-styling: false) {
 	font-family: hf-font('primary');
-	font-weight: hf-font-weight('primary', 'light');
 
 	@if not $only-styling {
-		font-size: em(24px);
+		@include hf-responsive((
+			'mobl': (font-size: em(18px), font-weight: hf-font-weight('primary', 'semibold')),
+			'tabl': (font-size: em(24px), font-weight: hf-font-weight('primary', 'regular'))
+		));
+
 		line-height: decimal(32px, 24px);
 	}
 
-	letter-spacing: -0.05em;
+	letter-spacing: -0.03em;
 	text-transform: none;
 	text-decoration: none;
 }
@@ -108,7 +111,7 @@ h3 { margin: 1em 0; }
 		line-height: decimal(18px, 14px);
 	}
 
-	letter-spacing: -0.025em;
+	letter-spacing: 0;
 	text-transform: uppercase;
 	text-decoration: none;
 }

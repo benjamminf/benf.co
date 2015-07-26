@@ -13,7 +13,9 @@ return array(
 	'*' => array(
 
 		'omitScriptNameInUrls' => true,
+		'rotateImagesOnUploadByExifData' => false,
 		'testToEmailAddress' => 'benjfleming21@gmail.com',
+		'devMode' => true,
 
 		'siteUrl' => '/benf.co/public',
 
@@ -27,12 +29,13 @@ return array(
 	'benf.co' => array(
 
 		'testToEmailAddress' => false,
+		'devMode' => false,
 
 		'siteUrl' => '//benf.co/',
 
 		'environmentVariables' => array(
 			'basePath' => '/home/website/public_html/',
-			'baseUrl' => '/'
+			'baseUrl' => '//benf.co/'
 		)
 	)
 );

@@ -5,35 +5,39 @@
  # Includes standard, Open Graph and Twitter metadata tags. Finds whatever settings to generate them.
  #}
 
-{% set metaKeywords    = entry.metaKeywords | default(metadata.metaKeywords) %}
-{% set metaDescription = entry.metaDescription | default(metadata.metaDescription) %}
-{% set metaTitle       = entry.metaTitle | default(entry.title) | default(pageTitle) | default(siteName) %}
-{% set metaUrl         = url() %}
-{% set metaImages      = (entry.image.find() | default([]))
-	| merge(entry.galleryImages.find() | default([]))
-	| merge(entry.metaImages.find() | default([]))
-%}
-{% set metaImage       = metaImages.first() %}
-{% set metaVideos      = [] %}
-{% set metaAudio       = false %}
-{% set metaVideos      = [] %}
-{% set metaVideo       = false %}
-{% set metaAuthors     = [] %}
-{% set metaLocale      = craft.locale %}
-{% set metaTwitter     = entry.metaTwitter | default(metadata.metaTwitter) %}
-{% set metaPublished   = entry.postDate | default(entry.dateCreated) %}
-{% set metaModified    = entry.dateUpdated %}
-{% set metaExpires     = entry.expiryDate %}
-{% set metaTags        = entry.tags %}
-{% set metaRobots      = metaExpires ? ['unavailable_after:' ~ metaExpires.rfc850()] : [] %}
-{% set metaSection     = metaType.metaSection | default(entry.parent.title) | default(entry.getSection().name) %}
-{% set metaType        = 'website' %}
-{% if metaPublished and metaTags %}
-	{% set metaType = 'article' %}
+{% if entry is defined %}
+	{% set metaKeywords    = metaKeywords    | default(entry.metaKeywords) %}
+	{% set metaDescription = metaDescription | default(entry.metaDescription) %}
+	{% set metaTitle       = metaTitle       | default(entry.title) %}
+	{% set metaImages      = metaImages      | default(entry.image.find()) | default(entry.metaImages.find()) %}
+	{% set metaSection     = metaSection     | default(entry.metaSection) %}
+	{% set metaTwitter     = metaTwitter     | default(entry.metaTwitter) %}
+	{% set metaPublished   = metaPublished   | default(entry.postDate) | default(entry.dateCreated) %}
+	{% set metaModified    = metaModified    | default(entry.dateUpdated) %}
+	{% set metaExpires     = metaExpires     | default(entry.expiryDate) %}
+	{% set metaTags        = metaTags        | default(entry.tags.find()) %}
+	{% set metaSection     = metaSection     | default(entry.parent ? entry.parent.title) | default(entry.section.name) %}
+	{% for param in entry.metaRobots %}
+		{% set metaRobots = metaRobots | merge([param]) %}
+	{% endfor %}
 {% endif %}
-{% for param in entry.metaRobots %}
-	{% set metaRobots = metaRobots | merge([param]) %}
-{% endfor %}
+
+{% set metaKeywords    = metaKeywords    | default(metadata.metaKeywords) %}
+{% set metaDescription = metaDescription | default(metadata.metaDescription) %}
+{% set metaTitle       = metaTitle       | default(pageTitle is defined ? pageTitle) %}
+{% set metaUrl         = metaUrl         | default(url()) %}
+{% set metaImages      = metaImages      | default(metadata.metaImages.find()) %}
+{% set metaImage       = metaImage       | default(metaImages | length ? metaImages[0]) %}
+{% set metaAuthors     = metaAuthors     | default([]) %}
+{% set metaLocale      = metaLocale      | default(craft.locale) %}
+{% set metaTwitter     = metaTwitter     | default(metadata.metaTwitter) %}
+{% set metaPublished   = metaPublished   | default(false) %}
+{% set metaModified    = metaModified    | default(false) %}
+{% set metaExpires     = metaExpires     | default(false) %}
+{% set metaTags        = metaTags        | default([]) %}
+{% set metaSection     = metaSection     | default(false) %}
+{% set metaRobots      = (metaRobots | default([])) | merge(metaExpires ? ['unavailable_after:' ~ metaExpires.rfc850()] : []) %}
+{% set metaType        = metaPublished and metaTags | length ? 'article' : 'website' %}
 
 
 {#
@@ -54,16 +58,6 @@
 {% if metaUrl         %}<meta property="og:url" content="{{ metaUrl }}">{%                 endif %}
 {% if siteName        %}<meta property="og:site_name" content="{{ siteName }}">{%          endif %}
 {% if metaDescription %}<meta property="og:description" content="{{ metaDescription }}">{% endif %}
-{% for audio in metaAudios %}
-	<meta property="og:audio" content="{{ audio.getUrl }}">
-	<meta property="og:audio:type" content="{{ audio.mimeType }}">
-{% endfor %}
-{% for video in metaVideos %}
-	<meta property="og:video" content="{{ video.getUrl }}">
-	<meta property="og:video:width" content="{{ video.width }}">
-	<meta property="og:video:height" content="{{ video.height }}">
-	<meta property="og:video:type" content="{{ video.mimeType }}">
-{% endfor %}
 {% for image in metaImages %}
 	<meta property="og:image" content="{{ image.getUrl }}">
 	<meta property="og:image:width" content="{{ image.width }}">
@@ -80,7 +74,7 @@
 		{% if metaModified  %}<meta property="og:article:modified_time" content="{{ metaModified.iso8601() }}">{%   endif %}
 		{% if metaExpires   %}<meta property="og:article:expiration_time" content="{{ metaExpires.iso8601() }}">{%  endif %}
 		{% for author in metaAuthors %}
-			<meta property="og:article:author" content="{{ author.getUrl }}">
+			<meta property="og:article:author" content="{{ author }}">
 		{% endfor %}
 		{% for tag in metaTags %}
 			<meta property="og:article:tag" content="{{ tag }}">

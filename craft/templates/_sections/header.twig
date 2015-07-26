@@ -7,27 +7,24 @@
 
 {% import '_macros' as macros %}
 
-{% set logo = company.logo.first() %}
-{% set menu = craft.entries.section('pages') %}
+{% set menu = craft.entries.section('navigation') %}
 
 <header id="header">
 	<div class="container -width-fill">
 		<div class="header_bar">
 
 			<h1 class="header_logo">
-				<a href="{{ siteUrl }}"><strong>benf</strong>.co</a>
+				<a href="{{ siteUrl }}" aria-label="Go home"><strong>benf</strong>.co</a>
 			</h1>
 
-			<nav class="header_menu">
-				<ul class="bar -h-align-center">
+			<nav id="menu" class="header_menu" data-model='toggler -> {"state": 0}' data-v-class="is-open: isOpen()">
+				<button class="menu_button" aria-hidden="true" tabindex="-1" data-v-on="click: toggle, click: prevent">
+					<i class="button_icon"></i>
+				</button>
+				<ul class="menu_links">
 					{% include '_components/menu' with {links: menu} %}
 				</ul>
 			</nav>
-
-			<a class="header_menu-button" href="#menu" aria-label="Skip to menu"
-			   data-control="#menu" data-v-on="click: toggle, click: prevent">
-				<i class="header_menu-icon"></i>
-			</a>
 
 		</div>
 	</div>

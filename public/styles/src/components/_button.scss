@@ -20,6 +20,7 @@ $button-transition: $transition !default;
 	background-color: transparent;
 	color: hf-color('mid');
 	transition:
+		border-color $button-transition,
 		background-color $button-transition,
 		color $button-transition;
 
@@ -48,7 +49,7 @@ $button-transition: $transition !default;
 		&:hover,
 		&:focus {
 			background-color: hf-color('dark');
-			color: hf-color('hydro');
+			color: hf-color('white');
 		}
 	}
 
@@ -60,7 +61,7 @@ $button-transition: $transition !default;
 		&:hover,
 		&:focus {
 			background-color: hf-color('dark');
-			color: hf-color('craft');
+			color: hf-color('white');
 		}
 	}
 }

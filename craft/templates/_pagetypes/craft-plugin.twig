@@ -1,0 +1,69 @@
+{#
+ # Craft plugin page
+ # -----------------
+ #}
+
+{% extends "_layouts/base" %}
+{% import '_macros' as macros %}
+
+{% set pageTitle = entry.title %}
+
+{% set logo = entry.logo.first() %}
+
+{% block content %}
+
+
+	<div class="section +background-light">
+		<div class="container">
+
+			<div class="columns -v-align-center">
+				<div class="column -desk-4">
+					<h1 class="+t-margin-none +b-margin-md +color-craft" aria-label="{{ entry.title }}">
+						{% if logo %}
+							{% if logo.extension == 'svg' %}
+								{{ logo | inlineSvg('auto', 64) }}
+							{% else %}
+								{{ macros.image(logo, {
+									'title': entry.title,
+									'class': '+responsive'}, {
+									mode: 'fit',
+									height: 40
+								}) }}
+							{% endif %}
+						{% else %}
+							{{ entry.title }}
+						{% endif %}
+					</h1>
+					<h3 class="+b-margin-md">{{ entry.summary | widont }}</h3>
+					<ul class="bar -h-gap-md -v-gap-sm">
+						<li><a href="#" class="button -style-craft">Coming soon</a></li>
+						<li><a href="#" class="button -style-white">Learn more</a></li>
+					</ul>
+				</div>
+				<div class="column -desk-8">
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<nav class="submenu -style-craft">
+		<ul class="submenu_links">
+			<li><a href="#" class="is-selected">Overview</a></li>
+			<li><a href="#">Docs</a></li>
+			<li><a href="#">GitHub</a></li>
+		</ul>
+	</nav>
+
+	<div class="section article">
+		<div class="container +v-trim">
+
+			<h2>Heading for a feature</h2>
+			<p>Some feature description</p>
+
+		</div>
+	</div>
+
+
+{% endblock %}

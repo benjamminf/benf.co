@@ -1009,6 +1009,90 @@ define('models/selector',{
 	}
 });
 
+define('polyfills/pointerEvents',['libs/jquery'], function($)
+{
+	var selector = '*';
+	var events = 'click mousedown mouseover'.split(' ');
+
+	function supportsPointerEvents()
+	{
+		if(navigator.appName == 'Microsoft Internet Explorer')
+		{
+			var agent = navigator.userAgent;
+			if(agent.match(/MSIE ([0-9]{1,}[\.0-9]{0,})/) != null)
+			{
+				var version = parseFloat(RegExp.$1);
+				if(version < 11)
+				{
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	function getInvisibleElement(el, top)
+	{
+		if(el && el !== top)
+		{
+			var style = getComputedStyle(el);
+			if(style.pointerEvents === 'none')
+			{
+				var current = el;
+				while(current !== top)
+				{
+					var parent = current.parentNode;
+					style = getComputedStyle(parent);
+
+					if(style.pointerEvents !== 'none')
+					{
+						return current;
+					}
+
+					current = parent;
+				}
+
+				return top;
+			}
+		}
+
+		return false;
+	}
+
+	function listener(e)
+	{
+		var invisibleEl = getInvisibleElement(e.target, this);
+		if(invisibleEl)
+		{
+			e.stopImmediatePropagation();
+			e.preventDefault();
+
+			/*
+			var display = invisibleEl.style.display;
+			invisibleEl.style.display = 'none';
+
+			var targetEl = document.elementFromPoint(e.clientX, e.clientY);
+			$(targetEl).trigger(e.type);
+
+			invisibleEl.style.display = display ? display : '';
+			*/
+		}
+	}
+
+	return function()
+	{
+		if(!supportsPointerEvents())
+		{
+			var html = document.documentElement;
+			events.forEach(function(event)
+			{
+				html.addEventListener(event, listener, true);
+			});
+		}
+	}
+});
+
 define('components/floatLabel',['libs/jquery', 'util/prefixClass', 'util/support'], function($, prefix, support)
 {
 	'use strict';
@@ -1287,14 +1371,18 @@ define('sections/header',['libs/jquery'], function($)
 
 	return function()
 	{
+		var doc = $(document.documentElement);
 		var hero = $('#hero');
+		var menu = $('#menu');
 
-		$('#header .header_menu a').on({
+		var toggler = menu.data('model');
+
+		menu.on({
 
 			mouseover: function()
 			{
 				var link = $(this);
-				var color = link.data('entry');
+				var color = link.data('slug');
 
 				hero
 					.removeClass(colorClass(colors))
@@ -1304,12 +1392,32 @@ define('sections/header',['libs/jquery'], function($)
 			mouseout: function()
 			{
 				hero.removeClass(colorClass(colors));
+			},
+
+			focus: function()
+			{
+				toggler.open();
+			},
+
+			blur: function()
+			{
+				toggler.close();
 			}
+		}, '.menu_links a');
+
+		menu.on('click', function(e)
+		{
+			e.stopPropagation();
+		});
+
+		doc.on('click', function(e)
+		{
+			toggler.close();
 		});
 	};
 });
 
-define('main',['libs/jquery','libs/vue','util/camelcase','util/prefixClass','util/support','models/toggler','models/selector','components/floatLabel','components/imageReady','components/scroll','components/model','components/control','sections/header'],function()
+define('main',['libs/jquery','libs/vue','util/camelcase','util/prefixClass','util/support','models/toggler','models/selector','polyfills/pointerEvents','components/floatLabel','components/imageReady','components/scroll','components/model','components/control','sections/header'],function()
 {
 	'use strict';
 
@@ -1329,6 +1437,9 @@ define('main',['libs/jquery','libs/vue','util/camelcase','util/prefixClass','uti
 			selector: require('models/selector')
 		}
 	};
+
+	// Polyfill initialisation
+	require('polyfills/pointerEvents')();
 
 	// Component initialisation
 	require('components/floatLabel')();

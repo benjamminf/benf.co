@@ -8,41 +8,70 @@
  # @param (String) tag [li]
  #}
 
-{% if not tag %}
+{% from '_macros' import element %}
+
+{% if tag is not defined %}
 	{% set tag = 'li' %}
 {% endif %}
 
 {% for link in links %}
+	{% set attributes = {} %}
+	{% set title = link.title %}
+	{% set classes = [] %}
+
+	{% set isSelected           = false %}
+	{% set isUri                = false %}
+	{% set isDescendantSelected = false %}
+	{% set isDescendantUri      = false %}
+
 	{% switch link.type %}
-
-		{% case 'pages' %}
-
-			{% set isSelected = (entry is defined and entry.id == link.id) %}
-
-			<{{ tag }}>
-				<a class="{{ isSelected ? ' is-selected' }}" data-entry="{{ link.slug }}" href="{{ link.getUrl }}">
-					{{ link.title }}
-				</a>
-			</{{ tag }}>
 
 		{% case 'internalLink' %}
 
-			{% set linkEntry = link.linkEntry.first() %}
-			{% set isSelected = (entry is defined and entry.id == linkEntry.id) %}
+			{% set linkEntry            = link.linkEntry.first() %}
+			{% set isSelected           = (entry is defined and entry.id == linkEntry.id) %}
+			{% set isUri                = (linkEntry.uri == craft.request.path) %}
+			{% set isDescendantSelected = (entry is defined and entry.isDescendantOf(linkEntry)) %}
+			{% set isDescendantUri      = (craft.request.path starts with linkEntry.uri and not isUri) %}
 
-			<{{ tag }}>
-				<a class="{{ isSelected ? ' is-selected' }}" data-entry="{{ linkEntry.slug }}" href="{{ linkEntry.getUrl }}">
-					{{ link.title }}
-				</a>
-			</{{ tag }}>
+			{% set attributes = attributes | merge({
+				'href': linkEntry.getUrl,
+				'data-entry': linkEntry.slug,
+				'data-slug': link.slug
+			}) %}
 
 		{% case 'externalLink' %}
 
-			<{{ tag }}>
-				<a href="{{ url(link.linkUrl) }}" target="_blank">
-					{{ link.title }}
-				</a>
-			</{{ tag }}>
+			{% set attributes = attributes | merge({
+				'href': url(link.linkUrl),
+				'target': '_blank',
+				'data-slug': link.slug
+			}) %}
+
+		{% default %}
+
+			{% set isSelected = (entry is defined and entry.id == link.id) %}
+			{% set isUri = (link.uri == craft.request.path) %}
+			{% set isDescendantSelected = (entry is defined and entry.isDescendantOf(link)) %}
+			{% set isDescendantUri = (craft.request.path starts with link.uri and not isUri) %}
+
+			{% set attributes = attributes | merge({
+				'href': link.getUrl,
+				'data-entry': link.slug,
+				'data-slug': link.slug
+			}) %}
 
 	{% endswitch %}
+
+	{% if isSelected           %}{% set classes = classes | merge(['is-selected'])            %}{% endif %}
+	{% if isUri                %}{% set classes = classes | merge(['is-uri'])                 %}{% endif %}
+	{% if isDescendantSelected %}{% set classes = classes | merge(['is-descendant-selected']) %}{% endif %}
+	{% if isDescendantUri      %}{% set classes = classes | merge(['is-descendant-uri'])      %}{% endif %}
+
+	{% set attributes = attributes | merge({'class': classes | join(' ')}) %}
+
+	<{{ tag }}>
+		{{ element('a', attributes, title) }}
+	</{{ tag }}>
+
 {% endfor %}

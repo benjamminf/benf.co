@@ -1,0 +1,63 @@
+// Settings
+// --------
+
+$submenu-transition: $transition;
+
+
+// Module
+// ------
+
+@include hf-module('submenu') {
+	padding: 0 hf-gutter('md') / 2;
+	background-color: hf-color('white');
+	color: hf-color('mid');
+
+	&_links {
+		@include hf-structure($h-align: center);
+
+		a {
+			position: relative;
+			display: block;
+			padding: hf-gutter('md') hf-gutter('md') / 2;
+			line-height: 1;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			transition: color $submenu-transition;
+
+			&:hover,
+			&:focus {
+				color: hf-color('dark');
+			}
+
+			@include hf-state('selected') {
+				color: hf-color('dark');
+
+				&::before {
+					content: '';
+					position: absolute;
+					bottom: 0;
+					left: hf-gutter('md') / 2;
+					right: hf-gutter('md') / 2;
+					display: block;
+					height: 2px;
+					background-color: hf-color('dark');
+				}
+			}
+		}
+	}
+
+	@include hf-parameter('style-craft') {
+
+		.submenu_links a {
+
+			@include hf-state('selected') {
+				color: hf-color('craft');
+
+				&::before {
+					background-color: hf-color('craft');
+				}
+			}
+		}
+	}
+}

@@ -2,8 +2,8 @@
 // ------
 
 html {
-	background-color: hf-color('dark');
-	color: hf-color('white');
+	background-color: hf-color('light');
+	color: hf-color('mid');
 }
 
 #content {
@@ -15,12 +15,15 @@ html {
 	display: none;
 }
 
-:focus {
-	outline: 0;
-	box-shadow: 0 0 6px hf-color('black', 0.25);
+a, button, input, select, textarea {
 
-	&:hover,
-	&:active {
-		box-shadow: none;
+	&:focus {
+		outline: 0;
+		box-shadow: 0 0 6px hf-color('black', 0.25);
+
+		&:hover,
+		&:active {
+			box-shadow: none;
+		}
 	}
 }

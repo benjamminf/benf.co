@@ -1,0 +1,29 @@
+// Settings
+// --------
+
+$accessibility-transition-in: $transition;
+$accessibility-transition-out: 1s;
+
+
+// Styles
+// ------
+
+.skip-link {
+	@extend .h4;
+
+	position: fixed;
+	z-index: 200;
+	bottom: 100%;
+	left: 0;
+	display: block;
+	padding: hf-gutter('sm');
+	line-height: 1;
+	background-color: hf-color('white');
+	color: hf-color('dark');
+	transition: transform $accessibility-transition-out;
+
+	&:focus {
+		transform: translateY(100%);
+		transition: transform $accessibility-transition-in;
+	}
+}

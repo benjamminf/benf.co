@@ -1,0 +1,19 @@
+// Styles
+// ------
+
+.tags {
+	padding: 0;
+
+	> * {
+		@include h4(true);
+
+		display: inline-block;
+		list-style: none;
+		font-size: em(12px);
+		line-height: 1;
+		padding: 6px 12px;
+		border-radius: 100px;
+		background-color: hf-color('mid');
+		color: hf-color('white');
+	}
+}

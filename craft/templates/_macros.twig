@@ -4,6 +4,17 @@
  #}
 
 
+{% macro element(tag, attributes, content = null) %}
+	<{{ tag }}{% for name, value in attributes %}
+		{%- if value %}
+			{%- if value is boolean %} {{ name }}{% else %} {{ name }}="{{ value }}"{% endif -%}
+		{% endif -%}
+	{% endfor %}>
+		{% if content != null %}{{ content }}
+	</{{ tag }}>{% endif %}
+{% endmacro %}
+
+
 {#
  # Creates a phone number link.
  #
@@ -50,19 +61,40 @@
  # @param asset (AssetFile) - The image file
  # @param class (String) - Optional class name
  #}
-{% macro image(asset, class = '', transform = '') %}
+{% macro image(asset, class = '', transform = false) %}
+	{% from _self import element %}
+
 	{% set highres = asset.highres.first() %}
 	{% do asset.setTransform(transform) %}
-	<img src="{{ asset.getUrl() }}"
-	     {% if highres %} srcset="{{ highres.getUrl }} 2x"{% endif %}
-	     title="{{ asset.title }}"
-	     width="{{ asset.width }}"
-	     height="{{ asset.height }}"
-	     {% if class is iterable %}
-		     {% for prop, value in class %}
-			     {{ prop }}="{{ value }}"
-		     {% endfor %}
-	     {% else %}
-		     class="{{ class }}"
-	     {% endif %}>
+
+	{% if transform %}
+		{% do asset.setTransform(transform) %}
+
+		{# Double the size of the transform for high resolution images #}
+		{% if highres and transform is iterable %}
+			{% set hrTrans = {} | merge(transform) %}
+			{% for setting, value in transform %}
+				{% switch setting %}
+				{% case 'width'  %}{% set hrTrans = hrTrans | merge({'width':  value * 2}) %}
+				{% case 'height' %}{% set hrTrans = hrTrans | merge({'height': value * 2}) %}
+				{% endswitch %}
+			{% endfor %}
+			{% do highres.setTransform(hrTrans) %}
+		{% endif %}
+	{% endif %}
+
+	{% set attributes = {
+		'src':    asset.getUrl,
+		'title':  asset.title,
+		'width':  asset.width,
+		'height': asset.height
+	} %}
+
+	{% if highres %}
+		{% set attributes = attributes | merge({'srcset': highres.getUrl ~ ' 2x'}) %}
+	{% endif %}
+
+	{% set attributes = attributes | merge(class is iterable ? class : {'class': class}) %}
+
+	{{ element('img', attributes) }}
 {% endmacro %}

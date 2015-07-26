@@ -1,0 +1,82 @@
+{#
+ # Craft
+ # -----
+ #
+ # The Craft plugins page of the website.
+ #}
+
+{% extends "_layouts/base" %}
+{% import '_macros' as macros %}
+
+{% set pageTitle = entry.title %}
+
+{% block content %}
+
+
+	<div class="section +background-light">
+		<div class="container">
+
+			<h1 class="+color-dark +t-margin-none +c-text-mobl">Craft Plugins</h1>
+
+			<ul class="grid -has-3 -h-gap-md -v-gap-md -h-align-center -v-align-fill">
+				{% for plugin in craft.entries.section('craftPlugins') %}
+					{% set logo = plugin.logo.first() %}
+					<li class="cell">
+						<a class="cell card -type-block -style-craft" href="{{ plugin.getUrl }}" title="{{ plugin.title }}" data-entry="{{ plugin.slug }}">
+							<h2 class="card_title" aria-label="{{ plugin.title }}">
+								{% if logo %}
+									{% if logo.extension == 'svg' %}
+										{{ logo | inlineSvg('auto', 40) }}
+									{% else %}
+										{{ macros.image(logo, {
+											'title': plugin.title,
+											'class': '+responsive'}, {
+											mode: 'fit',
+											height: 40
+										}) }}
+									{% endif %}
+								{% else %}
+									{{ plugin.title }}
+								{% endif %}
+							</h2>
+							<p class="card_summary">{{ plugin.summary | widont }}</p>
+							<span class="card_button">Learn more</span>
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+
+		</div>
+	</div>
+
+	{% set craftTag = craft.tags
+		.group('default')
+		.title('Craft')
+		.limit(1)
+		.first()
+	%}
+	{% set post = craft.entries
+		.section('blogPosts')
+		.relatedTo(craftTag)
+		.order('postDate desc')
+		.limit(1)
+		.first()
+	%}
+
+	{% if post %}
+		<div class="section +background-craft" itemscope itemtype="http://schema.org/Blog">
+			<div class="container">
+
+				<h1 class="+color-white +t-margin-none +c-text-mobl" itemprop="headline">Latest post about Craft</h1>
+
+
+				<div itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+					{% include '_components/blog-post-card' with {post: post, style: 'ghost'} %}
+				</div>
+
+			</div>
+		</div>
+	{% endif %}
+
+
+{% endblock %}

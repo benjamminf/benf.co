@@ -1,0 +1,33 @@
+{#
+ # Blog
+ # ----
+ #
+ # The blog page of the website.
+ #}
+
+{% extends "_layouts/base" %}
+{% import '_macros' as macros %}
+
+{% set pageTitle = entry.title %}
+
+{% block content %}
+
+
+	<div class="section +background-light" itemscope itemtype="http://schema.org/Blog">
+		<div class="container">
+
+			<h1 class="+color-dark +t-margin-none +c-text-mobl" itemprop="headline">{{ entry.title }}</h1>
+
+			<ul class="+spacer-md +unlist">
+				{% for post in craft.entries.section('blogPosts') %}
+					<li itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+						{% include '_components/blog-post-card' with {post: post} %}
+					</li>
+				{% endfor %}
+			</ul>
+
+		</div>
+	</div>
+
+
+{% endblock %}

@@ -1,6 +1,14 @@
 // Settings
 // --------
 
+$header-breakpoint: 660px;
+$header-menu-button-size: 22px;
+$header-menu-button-bar-width: 30px;
+$header-menu-button-bar-thickness: 2px;
+$header-menu-button-bar-spacing: 6px;
+$header-menu-button-close-scale: 1;
+$header-transition: $transition;
+
 
 // Styles
 // ------
@@ -8,12 +16,15 @@
 #header {
 	@extend %section-h-padding;
 
+	pointer-events: auto; // For IE10 and below
+	position: relative;
 	padding-top: hf-gutter('md') / 2;
 	padding-bottom: hf-gutter('md') / 2;
+	background-color: hf-color('dark');
+	color: hf-color('white');
 
 	.header_bar {
 		@include hf-structure(
-			$h-gap: hf-gutter('md'),
 			$h-align: justify,
 			$v-align: center
 		);
@@ -30,29 +41,181 @@
 
 	.header_menu {
 
-		a {
-			@extend .h4;
+		.menu_links {
+			@include hf-from($header-breakpoint) {
+				@include hf-structure;
+			}
 
-			display: block;
-			padding: hf-gutter('md') / 2;
 			color: hf-color('white', 0.5);
+
+			a {
+				@extend .h4;
+
+				display: block;
+				padding: hf-gutter('md') / 2;
+
+				&:hover,
+				&:focus {
+					color: hf-color('white');
+				}
+
+				@include hf-state('selected', 'uri', 'descendant-selected', 'descendant-uri') {
+					color: hf-color('white');
+
+					&[data-slug='hydro'] {
+						color: hf-color('hydro');
+					}
+
+					&[data-slug='craft'] {
+						color: hf-color('craft');
+					}
+				}
+			}
+		}
+
+		$size: $header-menu-button-size;
+		$width: $header-menu-button-bar-width;
+		$thickness: $header-menu-button-bar-thickness;
+		$spacing: $header-menu-button-bar-spacing;
+		$scale: $header-menu-button-close-scale;
+
+		.menu_button {
+			display: none;
+			position: relative;
+			width: hf-sum($size, hf-gutter('md'));
+			height: hf-sum($size, hf-gutter('md'));
+			border: none;
+			background: transparent;
+			transition: background-color $header-transition;
+
+			.button_icon {
+				@include burger(
+					$color: hf-color('white', 0.5),
+					$width: $width,
+					$bar-height: $thickness,
+					$bar-spacing: $spacing
+				) {
+					transition:
+						background-color $header-transition,
+						transform $header-transition;
+				}
+
+				position: absolute;
+				top: 50%;
+				margin-top: -$thickness / 2;
+				left: 50%;
+				margin-left: -$width / 2;
+			}
 
 			&:hover,
 			&:focus {
-				color: hf-color('white');
+				box-shadow: none;
+
+				.button_icon {
+					@include burger-color(hf-color('white'));
+				}
+			}
+		}
+
+		@include hf-state('open') {
+
+			.menu_button {
+				background-color: hf-color('white');
+
+				.button_icon {
+					background-color: transparent;
+					transform: rotate(180deg);
+
+					&:before {
+						background-color: hf-color('mid');
+						transform: translateY($thickness + $spacing) rotate(45deg) scaleX($scale);
+					}
+
+					&:after {
+						background-color: hf-color('mid');
+						transform: translateY(-$thickness - $spacing) rotate(-45deg) scaleX($scale);
+					}
+				}
+
+				&:hover,
+				&:focus {
+
+					.button_icon {
+
+						&:before,
+						&:after {
+							background-color: hf-color('dark');
+						}
+					}
+				}
 			}
 		}
 	}
 
-	.header_menu-button {
-		display: none;
-	}
-
-	body.section-homepage & {
+	body[data-section='homepage'] & {
 		position: absolute;
 		z-index: 10;
 		top: 0;
 		left: 0;
 		right: 0;
+		background-color: transparent;
+	}
+
+	@include hf-until($header-breakpoint) {
+
+		.header_menu {
+
+			.menu_links {
+				pointer-events: none;
+				position: absolute;
+				z-index: 100;
+				top: 100%;
+				right: hf-gutter('md') / 2;
+				margin: (hf-gutter('md') / -2) 0 0 0;
+				padding: (hf-gutter('md') / 2);
+				opacity: 0;
+				box-shadow: 0 0 6px hf-color('black', 0.25);
+				background-color: hf-color('white');
+				color: hf-color('mid');
+				transition: opacity $header-transition;
+
+				> li {
+					list-style: none;
+				}
+
+				a {
+					&:hover,
+					&:focus {
+						color: hf-color('dark');
+					}
+
+					@include hf-state('selected', 'uri', 'descendant-selected', 'descendant-uri') {
+						color: hf-color('dark');
+
+						&[data-slug='hydro'] {
+							color: hf-color('hydro');
+						}
+
+						&[data-slug='craft'] {
+							color: hf-color('craft');
+						}
+					}
+				}
+			}
+
+			.menu_button {
+				display: block;
+				position: relative;
+				z-index: 101;
+			}
+
+			@include hf-state('open') {
+
+				.menu_links {
+					pointer-events: auto;
+					opacity: 1;
+				}
+			}
+		}
 	}
 }

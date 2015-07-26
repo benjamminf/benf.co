@@ -1,0 +1,220 @@
+// Settings
+// --------
+
+$card-image-size: 250px;
+$card-border-radius: $border-radius;
+$card-row-breakpoint: 660px;
+$card-transition: $transition;
+
+
+// Module
+// ------
+
+@include hf-module('card') {
+	display: block;
+	padding: hf-gutter('md');
+	background-color: hf-color('white');
+	color: hf-color('mid');
+	transition:
+		background-color $card-transition,
+		color $card-transition;
+
+	&_title {
+		color: hf-color('dark');
+		transition: color $card-transition;
+	}
+
+	&_button {
+		@include p1(true);
+		@include hf-button(
+			$padding: hf-gutter('sm') hf-gutter('md'),
+			$border-width: 2px
+		);
+
+		border-radius: $card-border-radius;
+		border-color: hf-color('mid', 0.75);
+		background-color: hf-color('white');
+		color: hf-color('mid');
+		transition:
+			border-color $card-transition,
+			background-color $card-transition,
+			color $card-transition;
+	}
+
+	svg * {
+		transition: fill $card-transition !important;
+	}
+
+	&:hover,
+	&:focus {
+		background-color: hf-color('dark');
+		color: hf-color('mid');
+
+		.card_title {
+			color: hf-color('white');
+		}
+	}
+
+	@include hf-parameter('type-block') {
+		text-align: center;
+
+		.card_title {
+			margin: hf-gutter('lg') 0 hf-gutter('md') 0;
+		}
+
+		.card_summary {
+			margin: 0 auto hf-gutter('lg') auto;
+			max-width: 330px;
+			min-height: 26px * 3; // 3 lines at <p> line height
+		}
+
+		@include hf-until('tabl') {
+
+			.card_title {
+				margin-top: hf-gutter('md');
+			}
+
+			.card_summary {
+				margin-bottom: hf-gutter('md');
+			}
+		}
+	}
+
+	@include hf-parameter('type-row') {
+		position: relative;
+
+		.card_image {
+			display: none;
+		}
+
+		.card_title {
+			margin: 1rem 0;
+		}
+
+		.card_summary {
+			max-width: 500px;
+		}
+
+		.card_arrow {
+			position: absolute;
+			top: 50%;
+			right: hf-gutter('lg');
+			transform: translateY(-50%);
+		}
+
+		&:hover,
+		&:focus {
+
+			.card_arrow svg * {
+				fill: hf-color('mid');
+			}
+		}
+
+		@include hf-until(1000px) {
+
+			.card_arrow {
+				display: none;
+			}
+		}
+
+		@include hf-from($card-row-breakpoint) {
+			padding-left: hf-sum($card-image-size, hf-gutter('md'));
+			min-height: $card-image-size;
+
+			.card_image {
+				position: absolute;
+				display: block;
+				top: 0;
+				left: 0;
+			}
+		}
+	}
+
+	@include hf-parameter('style-ghost') {
+		background-color: transparent;
+		color: hf-color('white', 0.5);
+		box-shadow: hf-color('white', 0.25) 0 0 0 2px inset;
+
+		.card_title {
+			color: hf-color('white');
+		}
+
+		.card_arrow svg * {
+			fill: hf-color('white', 0.25);
+		}
+
+		.tags > * {
+			box-shadow: hf-color('white') 0 0 100px 100px inset;
+			color: hf-color('mid');
+			transition:
+				box-shadow $card-transition,
+				color $card-transition;
+
+			#{hf-utility('background-craft')} & {
+				color: hf-color('craft');
+			}
+		}
+
+		&:hover,
+		&:focus {
+			background-color: hf-color('white');
+			color: hf-color('mid');
+
+			.card_title {
+				color: hf-color('dark');
+			}
+
+			.card_arrow svg * {
+				fill: hf-color('light');
+			}
+
+			.tags > * {
+				box-shadow: none;
+				color: hf-color('white');
+
+				#{hf-utility('background-craft')} & {
+					color: hf-color('white');
+				}
+			}
+		}
+	}
+
+	@include hf-parameter('style-craft') {
+
+		@include hf-parameter('type-block') {
+
+			.card_title svg {
+				margin: auto;
+			}
+		}
+
+		.card_title {
+			font-weight: hf-font-weight('primary', 'semibold');
+			color: hf-color('craft');
+
+			svg {
+				display: block;
+			}
+		}
+
+		&:hover,
+		&:focus {
+			background-color: hf-color('craft');
+			color: hf-color('white');
+
+			.card_title {
+				color: hf-color('white');
+
+				svg * {
+					fill: hf-color('white') !important;
+				}
+			}
+
+			.card_button {
+				border-color: hf-color('craft');
+				background-color: hf-color('white');
+				color: hf-color('craft');
+			}
+		}
+	}
+}

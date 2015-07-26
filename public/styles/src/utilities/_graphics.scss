@@ -28,6 +28,8 @@
 		height: $bar-height;
 		@if $bar-rounded { border-radius: $bar-height; }
 		background-color: $color;
+
+		@content;
 	}
 }
 
@@ -37,6 +39,8 @@
 	&:before,
 	&:after {
 		background-color: $color;
+
+		@content;
 	}
 }
 
@@ -75,6 +79,12 @@
 	&:after {
 		transform: translateY(-($thickness / 2)) rotate(-45deg);
 	}
+
+	&,
+	&:before,
+	&:after {
+		@content;
+	}
 }
 
 @mixin cross-color($color) {
@@ -82,6 +92,8 @@
 	&:before,
 	&:after {
 		background-color: $color;
+
+		@content;
 	}
 }
 
@@ -94,8 +106,7 @@
 	$dimension: map-get((top: height, bottom: height, left: width, right: width), $position);
 
 	position: absolute;
-	z-index: 20;
-	$position: 0;
+	#{$position}: 0;
 
 	@if $dimension == height {
 		left: 0;
@@ -112,9 +123,9 @@
 	);
 
 	@if unit($size) == '%' {
-		$position-opposite: 100% - $size;
+		#{$position-opposite}: 100% - $size;
 
 	} @else {
-		$dimension: $size;
+		#{$dimension}: $size;
 	}
 }

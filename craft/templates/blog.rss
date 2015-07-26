@@ -1,0 +1,29 @@
+{%- set blog = craft.entries.section('blog').first() -%}
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>{{ siteName }} - {{ blog.title }}</title>
+		<link>{{ blog.getUrl }}</link>
+		<atom:link href="{{ craft.request.url }}" rel="self" type="application/rss+xml" />
+		<description>{{ blog.summary }}</description>
+		<language>en-au</language>
+		<pubDate>{{ now.rss }}</pubDate>
+		<lastBuildDate>{{ now.rss }}</lastBuildDate>
+
+		{% for entry in craft.entries.section('blogPosts')
+			.order(order | default('postDate desc'))
+			.limit(limit | default(20))
+		.find() %}
+		<item>
+			<title>{{ entry.title }}</title>
+			<link>{{ entry.url }}</link>
+			<pubDate>{{ entry.postDate.rss }}</pubDate>
+			<author>{{ entry.author }}</author>
+			<guid>{{ entry.url }}</guid>
+			<description><![CDATA[
+				{{ entry.body }}
+			]]></description>
+		</item>
+		{% endfor %}
+	</channel>
+</rss>

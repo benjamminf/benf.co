@@ -11,7 +11,8 @@
 %section-v-padding {
 	@include hf-responsive((
 		'mobl': (padding-top: hf-gutter('md'), padding-bottom: hf-gutter('md')),
-		'desk': (padding-top: hf-gutter('lg'), padding-bottom: hf-gutter('lg'))
+		'tabl': (padding-top: hf-gutter('lg'), padding-bottom: hf-gutter('lg')),
+		'desk': (padding-top: hf-gutter('xl'), padding-bottom: hf-gutter('xl'))
 	));
 }
 

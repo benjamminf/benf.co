@@ -20,22 +20,7 @@
 
 	<article class="section">
 		<div class="container">
-			{% if entry.positionSidebar %}
-
-				<div class="columns -h-gap-lg -v-gap-lg">
-					<div class="column -desk-9">
-						{{ body }}
-					</div>
-					<div class="column -desk-3">
-						{% include '_position' with {position: 'sidebar', modules: entry.positionSidebar} %}
-					</div>
-				</div>
-
-			{% else %}
-
-				{{ body }}
-
-			{% endif %}
+			{{ body }}
 		</div>
 	</article>
 

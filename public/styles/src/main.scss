@@ -15,17 +15,21 @@
 @import 'utilities/gutters';
 @import 'utilities/graphics';
 
+@import 'components/accessibility';
+@import 'components/typography';
+@import 'components/button';
+@import 'components/tags';
+// @import 'components/field';
+// @import 'components/float-label';
+// @import 'components/content';
+
 @import 'modules/section';
 @import 'modules/article';
+@import 'modules/card';
+@import 'modules/submenu';
 // @import 'modules/banner';
 // @import 'modules/gallery';
 // @import 'modules/carousel';
-
-@import 'components/typography';
-@import 'components/button';
-// @import 'components/field';
-@import 'components/float-label';
-// @import 'components/content';
 
 @import 'sections/header';
 @import 'sections/footer';

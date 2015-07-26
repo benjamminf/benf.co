@@ -19,6 +19,9 @@ define(function()
 		}
 	};
 
+	// Polyfill initialisation
+	require('polyfills/pointerEvents')();
+
 	// Component initialisation
 	require('components/floatLabel')();
 	require('components/imageReady')();

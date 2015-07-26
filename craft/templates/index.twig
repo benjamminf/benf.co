@@ -11,19 +11,13 @@
 {% block content %}
 
 
-	{% include '_position' with {position: 'top', modules: entry.positionTop} %}
-
 	<div id="hero" class="section -style-dark">
 		<div class="alignbox">
-			<div class="box container +v-trim">
-
-				{% include '_components/body' with {'blocks': entry.body} %}
-
+			<div class="box +v-trim">
+				{{ entry.body }}
 			</div>
 		</div>
 	</div>
-
-	{% include '_position' with {position: 'bottom', modules: entry.positionBottom} %}
 
 
 {% endblock %}

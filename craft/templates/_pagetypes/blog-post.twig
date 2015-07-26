@@ -1,0 +1,97 @@
+{#
+ # Blog post page
+ # --------------
+ #}
+
+{% extends "_layouts/base" %}
+{% import '_macros' as macros %}
+
+{% set pageTitle = entry.title %}
+
+{% set logo = entry.logo.first() %}
+{% set image = entry.image.first() %}
+
+{% block content %}
+
+
+	<article class="section article" itemscope itemtype="http://schema.org/BlogPosting">
+		<div class="container">
+			<div class="container -width-8 -align-left">
+
+				{% if image %}
+
+					<div class="article_hero">
+						<div class="article_image">
+							{{ macros.image(image, {
+								class: '+fill',
+								itemprop: 'image'
+							}, {
+								mode: 'crop',
+								width: 800,
+								height: 450,
+								quality: 100
+							}) }}
+						</div>
+
+						<h1 class="article_title" itemprop="headline">{{ entry.title }}</h1>
+						<h4 class="article_date" itemprop="datePublished">{{ entry.postDate | date('F d, Y') }}</h4>
+					</div>
+
+					<div class="article_body +v-trim" itemprop="articleBody">
+						{% include '_components/blog-body' with {blocks: entry.blogBody} %}
+					</div>
+
+				{% else %}
+
+					<h1 class="article_title" itemprop="headline">{{ entry.title }}</h1>
+					<h4 class="article_date" itemprop="datePublished">{{ entry.postDate | date('F d, Y') }}</h4>
+
+					<div class="article_body +v-trim" itemprop="articleBody">
+						{% include '_components/blog-body' with {blocks: entry.blogBody} %}
+					</div>
+
+				{% endif %}
+
+			</div>
+		</div>
+	</article>
+
+	<div class="section +color-mid +background-light">
+		<div class="container">
+			<div class="container -width-8 -align-left">
+				<div id="disqus_thread"></div>
+				<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+			</div>
+		</div>
+	</div>
+
+	{% set post = entry.getPrev({section: 'blogPosts', order: 'postDate asc'}) %}
+	{% if post %}
+		<div class="section +background-dark">
+			<div class="container">
+
+				<h3 class="+t-margin-none">Previous Post</h3>
+
+				<div itemscope itemtype="http://schema.org/BlogPosting">
+					{% include '_components/blog-post-card' with {post: post, style: 'ghost'} %}
+				</div>
+
+			</div>
+		</div>
+	{% endif %}
+
+{% endblock %}
+
+
+{% includejs %}
+	var disqus_shortname = 'benfco';
+	(function()
+	{
+		var dsq = document.createElement('script');
+		dsq.type = 'text/javascript';
+		dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0])
+			.appendChild(dsq);
+	})();
+{% endincludejs %}

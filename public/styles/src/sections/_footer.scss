@@ -6,13 +6,19 @@
 // ------
 
 #footer {
-	@extend %section-padding;
+	@extend %section-h-padding;
 
-	body.section-homepage & {
+	padding-top: hf-gutter('md');
+	padding-bottom: hf-gutter('md');
+	font-size: em(14px);
+	color: hf-color('mid');
+
+	body[data-section='homepage'] & {
 		position: absolute;
 		z-index: 10;
 		bottom: 0;
 		left: 0;
 		right: 0;
+		color: hf-color('white', 0.5);
 	}
 }

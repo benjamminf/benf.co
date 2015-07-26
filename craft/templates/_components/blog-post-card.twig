@@ -1,0 +1,38 @@
+{% set image = post.image.first() %}
+<a class="cell card -type-row{{ style is defined ? ' -style-' ~ style }}" href="{{ post.getUrl }}" aria-label="{{ post.title }}" itemprop="mainEntityOfPage" data-entry="{{ post.slug }}">
+	{% if image %}
+		{{ macros.image(image, {
+			class: 'card_image',
+			itemprop: 'image',
+			title: false
+		}, {
+			mode: 'crop',
+			width: 250,
+			height: 250,
+			quality: 100
+		}) }}
+	{% endif %}
+	<div class="+v-trim">
+		<h4 itemprop="datePublished">{{ post.postDate | date('F d, Y') }}</h4>
+		<h2 class="card_title" itemprop="headline">{{ post.title }}</h2>
+		<p class="card_summary" itemprop="description">{{ post.summary | widont }}</p>
+		{% if tags is not defined or tags %}
+			<ul class="tags" aria-label="This post is about:" itemprop="about">
+				{% for tag in post.tags %}
+					<li{% if tag.color and tag.color != '#000000' %} style="background-color: {{ tag.color }}"{% endif %} itemscope itemtype="http://schema.org/Thing">
+						<span itemprop="name">{{ tag }}</span>
+						{% if tag.summary %}<p class="+invisible" itemprop="description">{{ tag.summary }}</p>{% endif %}
+						{% if tag.linkUrl %}<span class="+invisible" itemprop="url">{{ tag.linkUrl }}</span>{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	</div>
+	<div class="card_arrow">
+		{{ craft.assets
+			.source('graphics')
+			.filename('card-row-arrow.svg')
+			.first() | inlineSvg
+		}}
+	</div>
+</a>

@@ -11,6 +11,15 @@
 {% set logo = entry.logo.first() %}
 {% set image = entry.image.first() %}
 
+{% do image.setTransform({
+	mode: 'crop',
+	width: 800,
+	height: 450,
+	quality: 100
+}) %}
+
+{% set metaImages = [image] %}
+
 {% block content %}
 
 

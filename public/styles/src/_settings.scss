@@ -5,10 +5,14 @@ $hf-font-size: 18px;
 
 $hf-max-width: 1200px;
 
-$hf-sizes: (
-	'sm': 0.5em,
-	'md':   1em,
-	'lg':   2em
+$hf-sizes: ('md': 1em);
+
+$hf-divisions: (
+	3: (3 / 12) * 100%,
+	4: (4 / 12) * 100%,
+	6: (6 / 12) * 100%,
+	8: (8 / 12) * 100%,
+	9: (9 / 12) * 100%
 );
 
 $hf-gutters: (
@@ -23,6 +27,8 @@ $hf-breakpoints: (
 	'tabl':  640px,
 	'desk': 1080px
 );
+
+$hf-grids: 3;
 
 $hf-colors: (
 	'white': #fff,
@@ -55,11 +61,14 @@ $hf-weights: (
 
 // Disabling
 
-// TODO
+$hf-generate-icon: false;
+$hf-generate-clearfix: false;
+$hf-generate-text-columns: false;
+$hf-generate-shape: false;
 
 
 // Theme
 // -----
 
 $border-radius: 3px;
-$transition: 0.3s;
+$transition: 0.25s cubic-bezier(0.75, 0, 0.25, 1);

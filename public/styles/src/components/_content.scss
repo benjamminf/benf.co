@@ -7,3 +7,20 @@ hr {
 	border: 0;
 	background-color: hf-color('light');
 }
+
+
+// Block Quote
+// -----------
+
+blockquote {
+	margin: hf-gutter('md') 0;
+	padding-left: hf-gutter('sm');
+	border-left: 4px solid hf-color('light');
+	color: hf-color('dark');
+
+	cite {
+		@extend .h4;
+
+		font-style: normal;
+	}
+}

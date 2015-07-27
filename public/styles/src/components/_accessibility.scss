@@ -20,10 +20,16 @@ $accessibility-transition-out: 1s;
 	line-height: 1;
 	background-color: hf-color('white');
 	color: hf-color('dark');
-	transition: transform $accessibility-transition-out;
+	opacity: 0;
+	transition:
+		opacity $accessibility-transition-out,
+		transform $accessibility-transition-out;
 
 	&:focus {
+		opacity: 1;
 		transform: translateY(100%);
-		transition: transform $accessibility-transition-in;
+		transition:
+			opacity $accessibility-transition-in,
+			transform $accessibility-transition-in;
 	}
 }

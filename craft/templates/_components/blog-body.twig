@@ -16,6 +16,17 @@
 
 			{{ block.textContent | widont }}
 
+		{% case 'button' %}
+
+			{% set entry = block.buttonEntry.first() %}
+			{% set url = entry.getUrl | default(block.buttonUrl) %}
+
+			<p>
+				<a class="button" href="{{ url }}"{{ block.buttonBlank ? ' target="_blank"' }}>
+					{{ block.buttonLabel }}
+				</a>
+			</p>
+
 		{% case 'image' %}
 
 			{% set image = block.imageFile.first() %}
@@ -23,28 +34,28 @@
 			<div class="+text-center +v-margin-md">
 				{{ macros.image(image, '+responsive') }}
 				{% if block.imageShowTitle %}
-					<p class="+color-light">{{ image.title }}</p>
+					<p class="+color-light">{{ image.title | widont }}</p>
 				{% endif %}
 			</div>
 
-		{% case 'button' %}
+		{% case 'video' %}
 
-			{% set entry = block.buttonEntry.first() %}
-			{% set url = entry.getUrl | default(block.buttonUrl) %}
+		{% case 'quote' %}
 
-			<p>
-				<a class="{{ block.buttonStyle }}" href="{{ url }}"{{ block.buttonBlank ? ' target="_blank"' }}>
-					{% if block.buttonIcon %}
-						{% if block.buttonIconPosition == 'right' %}
-							{{ block.buttonLabel }} <i class="{{ block.buttonIcon }}"></i>
-						{% else %}
-							<i class="{{ block.buttonIcon }}"></i> {{ block.buttonLabel }}
-						{% endif %}
-					{% else %}
-						{{ block.buttonLabel }}
-					{% endif %}
-				</a>
-			</p>
+			<blockquote>
+				{{ block.quoteContent | widont }}
+				{% if block.quoteUrl %}
+					<cite>
+						<a href="{{ url(block.quoteUrl) }}" target="_blank">
+							{{ block.quoteReference | default('Source') }}
+						</a>
+					</cite>
+				{% endif %}
+			</blockquote>
+
+		{% case 'code' %}
+
+			<pre>{{ block.codeContent | raw }}</pre>
 
 	{% endswitch %}
 {% endfor %}

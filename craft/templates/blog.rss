@@ -1,29 +1,46 @@
 {%- set blog = craft.entries.section('blog').first() -%}
 <?xml version="1.0"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
 	<channel>
-		<title>{{ siteName }} - {{ blog.title }}</title>
+		<title>{{ blog.title }} - benf.co</title>
 		<link>{{ blog.getUrl }}</link>
 		<atom:link href="{{ craft.request.url }}" rel="self" type="application/rss+xml" />
-		<description>{{ blog.summary }}</description>
+		<description>{{ blog.metaDescription }}</description>
 		<language>en-au</language>
 		<pubDate>{{ now.rss }}</pubDate>
 		<lastBuildDate>{{ now.rss }}</lastBuildDate>
-
+		<managingEditor>email@benf.co</managingEditor>
+		<webMaster>email@benf.co</webMaster>
 		{% for entry in craft.entries.section('blogPosts')
 			.order(order | default('postDate desc'))
 			.limit(limit | default(20))
 		.find() %}
-		<item>
-			<title>{{ entry.title }}</title>
-			<link>{{ entry.url }}</link>
-			<pubDate>{{ entry.postDate.rss }}</pubDate>
-			<author>{{ entry.author }}</author>
-			<guid>{{ entry.url }}</guid>
-			<description><![CDATA[
-				{{ entry.body }}
-			]]></description>
-		</item>
+			{% set image = entry.image.first() %}
+			{% do image.setTransform({
+				mode: 'crop',
+				width: 800,
+				height: 450,
+				quality: 100
+			}) %}
+			<item>
+				<title>{{ entry.title }}</title>
+				<link>{{ entry.url }}</link>
+				<pubDate>{{ entry.postDate.rss }}</pubDate>
+				<author>{{ entry.author }}</author>
+				<guid>{{ entry.url }}</guid>
+				<description><![CDATA[
+					{{ entry.summary }}
+				]]></description>
+				{% if image %}
+					<media:content
+						url="{{ image.url }}"
+						fileSize="{{ image.size }}"
+						type="{{ image.mimeType }}"
+						medium="{{ image.kind }}"
+						width="{{ image.width }}"
+						height="{{ image.height }}" />
+				{% endif %}
+			</item>
 		{% endfor %}
 	</channel>
 </rss>

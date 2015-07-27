@@ -65,7 +65,6 @@
 	{% from _self import element %}
 
 	{% set highres = asset.highres.first() %}
-	{% do asset.setTransform(transform) %}
 
 	{% if transform %}
 		{% do asset.setTransform(transform) %}

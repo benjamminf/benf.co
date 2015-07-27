@@ -7,7 +7,7 @@
 
 {% if entry is defined %}
 	{% set metaKeywords    = metaKeywords    | default(entry.metaKeywords) %}
-	{% set metaDescription = metaDescription | default(entry.metaDescription) %}
+	{% set metaDescription = metaDescription | default(entry.metaDescription) | default(entry.summary) %}
 	{% set metaTitle       = metaTitle       | default(entry.title) %}
 	{% set metaImages      = metaImages      | default(entry.image.find()) | default(entry.metaImages.find()) %}
 	{% set metaSection     = metaSection     | default(entry.metaSection) %}

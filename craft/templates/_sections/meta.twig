@@ -11,7 +11,7 @@
 	{% set metaTitle       = metaTitle       | default(entry.title) %}
 	{% set metaImages      = metaImages      | default(entry.image.find()) | default(entry.metaImages.find()) %}
 	{% set metaSection     = metaSection     | default(entry.metaSection) %}
-	{% set metaTwitter     = metaTwitter     | default(entry.metaTwitter) %}
+	{# set metaTwitter     = metaTwitter     | default(entry.metaTwitter) #}
 	{% set metaPublished   = metaPublished   | default(entry.postDate) | default(entry.dateCreated) %}
 	{% set metaModified    = metaModified    | default(entry.dateUpdated) %}
 	{% set metaExpires     = metaExpires     | default(entry.expiryDate) %}
@@ -30,7 +30,8 @@
 {% set metaImage       = metaImage       | default(metaImages | length ? metaImages[0]) %}
 {% set metaAuthors     = metaAuthors     | default([]) %}
 {% set metaLocale      = metaLocale      | default(craft.locale) %}
-{% set metaTwitter     = metaTwitter     | default(metadata.metaTwitter) %}
+{# set metaTwitter     = metaTwitter     | default(metadata.metaTwitter) #}
+{% set metaTwitter     = '@benjfleming' %}
 {% set metaPublished   = metaPublished   | default(false) %}
 {% set metaModified    = metaModified    | default(false) %}
 {% set metaExpires     = metaExpires     | default(false) %}

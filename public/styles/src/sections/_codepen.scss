@@ -1,0 +1,31 @@
+$codepen-transition: 1s;
+
+#codepen {
+	@extend %section-h-padding;
+
+	position: relative;
+	width: 100%;
+	height: 600px;
+	height: calc(100vh - 100px);
+	padding-top: 0;
+	padding-bottom: 0;
+	max-height: 600px;
+
+	.codepen_embed,
+	.codepen_description {
+		transition: opacity $codepen-transition;
+
+		&.v-enter,
+		&.v-leave {
+			opacity: 0;
+		}
+	}
+
+	.codepen_embed {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+}

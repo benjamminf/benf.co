@@ -1,8 +1,7 @@
-{%- set blog = craft.entries.section('blog').first() -%}
 <?xml version="1.0"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-	<title>{{ siteName }} - {{ blog.title }}</title>
-	<link href="{{ blog.getUrl }}" />
+	<title>{{ siteName }}</title>
+	<link href="{{ siteUrl }}" />
 	<link type="application/atom+xml" rel="self" href="{{ craft.request.url }}" />
 	<updated>{{ now.atom }}</updated>
 	<id>{{ craft.request.url }}</id>
@@ -10,17 +9,10 @@
 		<name>Benjamin Fleming</name>
 		<email>email@benf.co</email>
 	</author>
-	{% for entry in craft.entries.section('blogPosts')
+	{% for entry in craft.entries.section(['blogPosts', 'experiments'])
+		.order(order | default('postDate desc'))
 		.limit(limit | default(20))
-		.order(order | default('dateCreated desc'))
 	.find() %}
-		{% set image = entry.image.first() %}
-		{% do image.setTransform({
-			mode: 'crop',
-			width: 800,
-			height: 450,
-			quality: 100
-		}) %}
 		<entry>
 			<id>{{ entry.url }}</id>
 			<link type="text/html" rel="alternate" href="{{ entry.url }}" />

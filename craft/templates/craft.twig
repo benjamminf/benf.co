@@ -22,7 +22,7 @@
 				{% for plugin in craft.entries.section('craftPlugins') %}
 					{% set logo = plugin.logo.first() %}
 					<li class="cell">
-						<a class="cell card -type-block -style-craft" href="{{ plugin.getUrl }}" title="{{ plugin.title }}" data-entry="{{ plugin.slug }}">
+						<a class="card -type-block -style-craft" href="{{ plugin.url }}" title="{{ plugin.title }}" data-entry="{{ plugin.slug }}">
 							<h2 class="card_title" aria-label="{{ plugin.title }}">
 								{% if logo %}
 									{% if logo.extension == 'svg' %}

@@ -1,6 +1,7 @@
 // Settings
 // --------
 
+$play-button-size: 54px !default;
 $button-border-radius: $border-radius !default;
 $button-transition: $transition !default;
 
@@ -63,5 +64,38 @@ $button-transition: $transition !default;
 			background-color: hf-color('dark');
 			color: hf-color('white');
 		}
+	}
+}
+
+
+// Play button
+
+.play-button {
+	position: relative;
+	display: inline-block;
+	width: $play-button-size;
+	height: $play-button-size;
+	border: 0;
+	border-radius: 50%;
+	background-color: hf-color('white', 0.5);
+	transition: background-color $button-transition;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: ($play-button-size / 2) - (15px);
+		left: ($play-button-size / 2) - (8px);
+
+		@include hf-triangle(
+			$color: hf-color('dark'),
+			$direction: right,
+			$size: 15px,
+			$point-size: 22px
+		)
+	}
+
+	&:hover,
+	&:focus {
+		background-color: hf-color('white');
 	}
 }

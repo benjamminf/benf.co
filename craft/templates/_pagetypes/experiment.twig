@@ -1,0 +1,92 @@
+{#
+ # Experiment page
+ # ---------------
+ #}
+
+{% extends "_layouts/base" %}
+{% import '_macros' as macros %}
+
+{% set pageTitle = entry.title %}
+
+{% set image = entry.image.first() %}
+{% if image %}
+	{% do image.setTransform({
+		mode: 'crop',
+		width: 800,
+		height: 450,
+		quality: 100
+	}) %}
+	{% set metaImages = [image] %}
+{% endif %}
+
+{% block content %}
+
+
+	<div id="codepen" class="section -style-dark" data-model="toggler">
+		<div class="codepen_description alignbox" data-v-if="!isOpen()" data-v-transition>
+			<div class="box +v-trim">
+				<h1 class="+v-margin-none" itemprop="headline">{{ entry.title }}</h1>
+				<h4 class="+t-margin-none" itemprop="datePublished">{{ entry.postDate | date('F d, Y') }}</h4>
+				<p class="container -width-4" itemprop="description">{{ entry.summary }}</p>
+				<a href="http://codepen.io/benjamminf/pen/{{ entry.codepenSlug }}" class="play-button"
+				   data-v-on="click: prevent, click: open"></a>
+			</div>
+		</div>
+		<iframe class="codepen_embed" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true"
+				src="//codepen.io/benjamminf/embed/{{ entry.codepenSlug }}/?height=600&theme-id=0&default-tab=result"
+				data-v-if="isOpen()" data-v-transition></iframe>
+	</div>
+
+	{% if entry.blogBody | length %}
+		<article class="section article" itemscope itemtype="http://schema.org/Article">
+			<div class="container">
+				<div class="container -width-8 -align-left">
+
+					<div class="article_body +v-trim" itemprop="articleBody">
+						{% include '_components/blog-body' with {blocks: entry.blogBody} %}
+					</div>
+
+				</div>
+			</div>
+		</article>
+	{% endif %}
+
+	<div class="section +color-mid +background-light">
+		<div class="container">
+			<div class="container -width-8 -align-left">
+				<div id="disqus_thread"></div>
+				<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+			</div>
+		</div>
+	</div>
+
+	{% set experiment = entry.getPrev({section: 'experiments', order: 'postDate asc'}) %}
+	{% if experiment %}
+		<div class="section +background-dark">
+			<div class="container">
+
+				<h3 class="+t-margin-none">Previous Experiment</h3>
+
+				<div itemscope itemtype="http://schema.org/Article">
+					{% include '_components/blog-post-card' with {post: experiment, style: 'ghost'} %}
+				</div>
+
+			</div>
+		</div>
+	{% endif %}
+
+
+{% endblock %}
+
+{% includejs %}
+	var disqus_shortname = 'benfco';
+	(function()
+	{
+		var dsq = document.createElement('script');
+		dsq.type = 'text/javascript';
+		dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0])
+			.appendChild(dsq);
+	})();
+{% endincludejs %}

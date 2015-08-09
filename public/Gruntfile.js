@@ -11,7 +11,8 @@ module.exports = function(grunt)
 					loadPath: 'C:\\wamp\\www\\hydro-css\\scss\\'
 				},
 				files: {
-					'styles/app.css' : 'styles/src/main.scss'
+					'styles/app.css' : 'styles/src/main.scss',
+					'styles/codepen.css' : 'styles/src/codepen.scss'
 				}
 			}
 		},
@@ -23,7 +24,7 @@ module.exports = function(grunt)
 			multiple_files: {
 				expand: true,
 				flatten: true,
-				src: 'styles/app.css',
+				src: ['styles/app.css', 'styles/codepen.css'],
 				dest: 'styles/'
 			}
 		},
@@ -38,7 +39,8 @@ module.exports = function(grunt)
 			},
 			target: {
 				files: {
-					'styles/app.min.css' : 'styles/app.css'
+					'styles/app.min.css' : 'styles/app.css',
+					'styles/codepen.min.css' : 'styles/codepen.css'
 				}
 			}
 		},
